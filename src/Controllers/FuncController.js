@@ -47,7 +47,7 @@ module.exports={
         const email=request.params.email;
         const senha=request.params.senha;
         const con = await db.conecta();
-        const sql = "SELECT * FROM Pessoa,Funcionario WHERE Pessoa.pes_cod=Funcionario.pes_cod and pes_email=? and fun_senha=? and fun_status=true";
+        const sql = "SELECT * FROM Pessoa,Funcionario WHERE Pessoa.pes_cod=Funcionario.pes_cod and pes_email=? and fun_senha=? ";
         const valores = [email , senha ];
         const users = await db.consulta(sql,valores);
         return response.json(users.data);

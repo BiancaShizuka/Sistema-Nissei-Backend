@@ -173,7 +173,7 @@ module.exports={
     async alterarFuncionarioNulo(request,response){
         const {cod} = request.params;
     
-      
+        console.log('passei');
         const con = await db.conecta();
         const sql = "UPDATE servico SET fun_cod=? "+
                     "WHERE fun_cod = ? and ser_status=true";
@@ -185,7 +185,7 @@ module.exports={
     async consultarServico(request,response){
         const {cod} = request.params;
         const con = await db.conecta();
-        let sql = "SELECT ser_inicio,ser_status,p.pes_cod,ser_fim,ser_descricao,ser_maoObra,p.pes_nome as cli_nome, p1.pes_nome as func_nome,c.car_placa ";
+        let sql = "SELECT ser_inicio,ser_status,p.pes_cod,ser_fim,ser_descricao,ser_maoObra,p.pes_nome as cli_nome, p1.pes_nome as func_nome,p1.pes_cod as func_cod,c.car_placa ";
         sql+="FROM (Servico s ";
         sql+="left join Pessoa p on cli_cod=p.pes_cod ";
         sql+="left join Pessoa p1 on fun_cod=p1.pes_cod ";
