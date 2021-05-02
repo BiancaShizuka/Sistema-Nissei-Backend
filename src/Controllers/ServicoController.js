@@ -1,33 +1,63 @@
 const axios = require('axios');
 //const mysql = require('mysql2/promise');
 const db = require('../models/Database');
-
+const Servico=require('../models/Servico');
+const Peca=require('../models/Peca');
+const ServicoPeca=require('../models/ServicoPeca');
+const Carro=require('../models/Carro');
+const Cliente=require('../models/Cliente');
+const Funcionario=require('../models/Funcionario');
 module.exports={
     async gravar(request,response) {
- 
-        const {car_id,cli_cod,fun_cod,ser_descricao,ser_maoObra,ser_inicio,ser_status} = request.body;
-        //verificar se o professor ja esta cadastrado
+        const {car_id,cli_cod,fun_cod,ser_descricao,ser_maoObra,ser_inicio,pecas,ser_status} = request.body;
         const con = await db.conecta();
-        const sql = "INSERT INTO servico (car_id,cli_cod,fun_cod,ser_descricao,ser_maoObra,ser_inicio,ser_fim,ser_status) VALUES (?, ?, ?,?, ?,?, null,?)";
-        
-        const valor = [car_id,cli_cod,fun_cod,ser_descricao,ser_maoObra,ser_inicio,ser_status];
-        const result = await db.manipula(sql,valor);
-        console.log(result);
-        return response.json(result);
+        let servico=new Servico(0,await new Carro().procurarCod(car_id,db),
+                                await new Cliente().procurarCod(cli_cod,db),
+                                await new Funcionario().procurarCod(fun_cod,db),
+                                ser_descricao,
+                                ser_maoObra,
+                                ser_inicio,
+                                ser_status);
+        for(let i=0;i<pecas.length;i++){
+            servico.addPecaLista(new ServicoPeca(await new Peca().procurarCod(pecas[i].pec_cod,db),
+                                                pecas[i].uti_precoUni,
+                                                pecas[i].uti_qtde));
+        }
+        await servico.gravar(db);
+        for(let i=0;i<servico.getPecas().length;i++){
+            await servico.getPecas()[i].gravar(servico.getCod(),db);
+        }
+        return response.json(servico);
     },
     async alterar(request,response){
-        const {ser_cod,car_id,fun_cod,ser_descricao,ser_maoObra,ser_inicio,ser_status} = request.body;
-        console.log(car_id);
-      
+        const {ser_cod,car_id,fun_cod,ser_descricao,ser_maoObra,ser_inicio,pecas,ser_status} = request.body;
         const con = await db.conecta();
-        const sql = "UPDATE servico SET car_id=? ,fun_cod=?,"+
-                    "ser_descricao=?,ser_maoObra=?,ser_inicio=?, "+
-                    "ser_status=? "+
-                    "WHERE ser_cod = ?";
-        
-        const valor = [car_id,fun_cod,ser_descricao,ser_maoObra,ser_inicio,ser_status,ser_cod];
-        const result = await db.manipula(sql,valor);
-        return response.json(result);
+        let servico=new Servico(ser_cod,await new Carro().procurarCod(car_id,db),
+                                null,
+                                await new Funcionario().procurarCod(fun_cod,db),
+                                ser_descricao,
+                                ser_maoObra,
+                                ser_inicio,
+                                ser_status);
+        for(let i=0;i<pecas.length;i++){
+            console.log("qtde="+pecas[i].uti_qtde);
+            console.log("preco:"+pecas[i].uti_precoUni);
+            servico.addPecaLista(new ServicoPeca(await new Peca().procurarCod(pecas[i].pec_cod,db),
+                                                pecas[i].uti_precoUni,
+                                                pecas[i].uti_qtde));
+        }
+        await servico.alterar(db);
+        for(let i=0;i<servico.getPecas().length;i++){
+            if(pecas[i].banco==0) //apenas aqueles que ainda nao estao
+            await servico.getPecas()[i].gravar(servico.getCod(),db);
+        }
+        return response.json(servico);
+    },
+    async procurarServico(request,response){
+        const {cod} = request.params;
+        const con = await db.conecta();
+        const servico=await new Servico().procurarCod(cod,db);
+        return response.json(servico);
     },
     async alterarStatus(request,response){
         const {ser_cod,ser_total,ser_fim,ser_status} = request.body;
@@ -38,16 +68,6 @@ module.exports={
         const valor = [ser_status,ser_fim,ser_cod];
         const result = await db.manipula(sql,valor);
         return response.json(result);
-    },
-    async procurarServico(request,response){
-        const {cod} = request.params;
-        const con = await db.conecta();
-        const sql = "SELECT * FROM servico WHERE ser_cod=?";
-        
-        const valor = [cod];
-        const result = await db.consulta(sql,valor);
-
-        return response.json(result.data);
     },
     async listarPorCliente(request,response){
         const {cod} = request.params;

@@ -70,7 +70,7 @@ module.exports=class Servico{
             funcionario=await new Funcionario().procurarCod(resp.data[0].fun_cod,db);
         let servico=new Servico(resp.data[0].ser_cod,carro,await (new Cliente().procurarCod(resp.data[0].cli_cod,db)),
                         funcionario,resp.data[0].ser_descricao,resp.data[0].ser_maoObra,
-                        resp.data[0].ser_status);
+                        resp.data[0].ser_inicio,resp.data[0].ser_status);
         servico.setPecas(await (new ServicoPeca().listar(cod,db)));
         servico.calcularTotal();
         return servico;
