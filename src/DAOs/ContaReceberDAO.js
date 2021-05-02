@@ -19,22 +19,29 @@ module.exports=class ContaReceberDAO{
         const result = await db.manipula(sql,valor);
   
     }
-    async deletar(conta,db){
 
-        const sql = "DELETE FROM conta_receber WHERE con_cod=? AND ser_cod=? "
-              
-        
-        const valor = [conta.getCod(),conta.getSerCod()];
-        const result = await db.manipula(sql,valor);
-    }
-    async deletarPorServico(conta,db){
+    async deletarPorServico(ser_cod,db){
       
     
         const sql = "DELETE FROM conta_receber WHERE ser_cod=? "
               
         
-        const valor = [conta.getSerCod()];
+        const valor = [ser_cod];
         const result = await db.manipula(sql,valor);
     
+    }
+    async consultar(con_cod,ser_cod,db){
+        const sql = "select * from conta_receber where con_cod=? and ser_cod=? ";
+              
+        const valor = [con_cod,ser_cod];
+        const conta = await db.consulta(sql,valor);
+        return conta;
+    }
+    async consultarContasServico(ser_cod,db){
+        const sql = "select * from conta_receber where ser_cod=? ";
+              
+        const valor = [ser_cod];
+        const conta = await db.consulta(sql,valor);
+        return conta;
     }
 }

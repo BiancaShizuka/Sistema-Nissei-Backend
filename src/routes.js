@@ -97,4 +97,9 @@ routes.delete('/contaPorServico/:ser_cod',contaCtrl.deletarPorServico);
 routes.get('/conta/:ser_cod',contaCtrl.listar);
 routes.get('/contaPaga/:ser_cod',contaCtrl.listarContasPagas);
 routes.get('/contaFiltros',contaCtrl.listarFiltros);
+
+const contaReceberCtr=require('./Controllers/EfetuarRecebimento');
+routes.put('/contaReceber',contaReceberCtr.alterar);
+routes.get('/contaReceber/:ser_cod',contaReceberCtr.listarContas);
+
 module.exports=routes;
