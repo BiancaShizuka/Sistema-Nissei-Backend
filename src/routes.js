@@ -98,10 +98,11 @@ routes.get('/conta/:ser_cod',contaCtrl.listar);
 routes.get('/contaPaga/:ser_cod',contaCtrl.listarContasPagas);
 routes.get('/contaFiltros',contaCtrl.listarFiltros);
 
-const contaReceberCtr=require('./Controllers/EfetuarRecebimento');
+const contaReceberCtr=require('./Controllers/EfetuarRecebimentoController');
 routes.put('/contaReceber',contaReceberCtr.alterar);
 routes.get('/contaReceber/:ser_cod',contaReceberCtr.listarContas);
 
-const fecharServicoCtr=require('./Controllers/FecharServico');
+const fecharServicoCtr=require('./Controllers/FecharCancelarServicoController');
 routes.post('/fecharServico',fecharServicoCtr.fechar);
+routes.put('/cancelarFechamento',fecharServicoCtr.cancelar);
 module.exports=routes;
