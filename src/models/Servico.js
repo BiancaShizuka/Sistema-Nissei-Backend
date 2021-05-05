@@ -12,7 +12,6 @@ module.exports=class Servico{
         this.funcionario=funcionario;
         this.ser_descricao=descricao;
         this.ser_maoObra=maoObra;
-        this.ser_total=0;
         this.ser_status=status;
         this.ser_inicio=inicio;
         this.ser_fim=null;
@@ -97,6 +96,7 @@ module.exports=class Servico{
         let servico=new Servico(resp.data[0].ser_cod,carro,await (new Cliente().procurarCod(resp.data[0].cli_cod,db)),
                         funcionario,resp.data[0].ser_descricao,resp.data[0].ser_maoObra,
                         resp.data[0].ser_inicio,resp.data[0].ser_status);
+        servico.setFim(resp.data[0].ser_fim);
         servico.setPecas(await (new ServicoPeca().listar(cod,db)));
         servico.setContas(await (new ContaReceber().listarContasServico(cod,db)));
         servico.calcularTotal();

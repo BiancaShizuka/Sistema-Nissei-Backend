@@ -5,11 +5,10 @@ module.exports=class ServicoDAO{
                     "ser_descricao=?,ser_maoObra=?,ser_inicio=?, ser_fim=?, "+
                     "ser_status=? "+
                     "WHERE ser_cod = ?";
-        console.log(ser.getFim());
-        console.log(ser.getCod());
-        console.log(ser.getStatus());
+
         const valor = [ser.getCarro().getId(),ser.getFuncionario().getCod(),ser.getDescricao(),
                     ser.getMaoObra(),ser.getInicio(),ser.getFim(),ser.getStatus(),ser.getCod()];
+                    console.log("fim: "+ser.getFim());
         const result = await db.manipula(sql,valor);
         console.log(result)
     }
