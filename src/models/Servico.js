@@ -102,6 +102,37 @@ module.exports=class Servico{
         servico.calcularTotal();
         return servico;
     }
+    async listarPorCliente(cli_cod,db){
+        const resp=await new ServicoDAO().listarPorCliente(cli_cod,db);
+        let carro=null;
+        let cliente=null;
+        let funcionario=null;
+        let servicos=[];
+
+
+        for(let i=0;i<resp.data.length;i++){
+            if(resp.data[i].car_id!==null)
+                carro=await new Carro().procurarCod(resp.data[i].car_id,db);
+            if(resp.data[i].fun_cod!==null)
+                funcionario=await new Funcionario().procurarCod(resp.data[i].fun_cod,db);
+            cliente=await new Cliente().procurarCod(resp.data[i].cli_cod,db);
+
+            servicos.push(
+                new Servico(resp.data[i].ser_cod,
+                            carro,
+                            cliente,
+                            funcionario,
+                            resp.data[i].ser_descricao,
+                            resp.data[i].mao_obra,
+                            resp.data[i].ser_inicio,
+                            resp.data[i].ser_status)
+            )
+            carro=null;
+            cliente=null;
+            funcionario=null;
+        }
+        return servicos;
+    }
     async listarFiltros(cli_nome,dt_inicio,dt_saida,car_placa,status,db){
         const sers = await new ServicoDAO().listarFiltros(cli_nome,dt_inicio,dt_saida,car_placa,status,db);
         let servicos=[];
@@ -109,6 +140,36 @@ module.exports=class Servico{
         let cliente=null;
         let funcionario=null;
         for(let i=0;i<sers.data.length;i++){
+            if(sers.data[i].car_id!=null)
+                carro=await new Carro().procurarCod(sers.data[i].car_id,db);
+            if(sers.data[i].fun_cod!=null)
+                funcionario=await new Funcionario().procurarCod(sers.data[i].fun_cod,db);
+            cliente=await new Cliente().procurarCod(sers.data[i].cli_cod,db);
+
+            servicos.push(
+                new Servico(sers.data[i].ser_cod,
+                            carro,
+                            cliente,
+                            funcionario,
+                            sers.data[i].ser_descricao,
+                            sers.data[i].mao_obra,
+                            sers.data[i].ser_inicio,
+                            sers.data[i].ser_status)
+            )
+            carro=null;
+            cliente=null;
+            funcionario=null;
+        }
+        console.log(servicos);
+        return servicos;
+    }
+    async listarPorCarro(car_id,db){
+        const sers=await new ServicoDAO().listarPorCarro(car_id,db);
+        let servicos=[];
+        let carro=null;
+        let cliente=null;
+        let funcionario=null;
+        for(let i=0;i<resp.data.length;i++){
             if(sers.data[i].car_id!=null)
                 carro=await new Carro().procurarCod(sers.data[i].car_id,db);
             if(sers.data[i].fun_cod!=null)

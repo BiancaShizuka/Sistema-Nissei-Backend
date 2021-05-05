@@ -24,6 +24,13 @@ module.exports=class ServicoPeca{
         const sql = "DELETE FROM servicopecas WHERE ser_cod=? AND pec_cod=? "
               
         const valor = [cod,peca.getPeca().getCod()];
-        await db.manipula(sql,valor);
+        const result=await db.manipula(sql,valor);
+        return result;
+    }
+    async procurarServicoPeca(peca,ser_cod,db){
+        const sql="select * from servicopecas where ser_cod=? and pec_cod=?";
+        const valor=[ser_cod,peca.getPeca().getCod()];
+        const result=await db.manipula(sql,valor);
+        return result;
     }
 }

@@ -87,4 +87,16 @@ module.exports=class ServicoDAO{
         
         return result;
     }
+    async listarPorCliente(cli_cod,db){
+        const sql = "SELECT * FROM servico where cli_cod=?";
+        const valor = [cli_cod];
+        const sers = await db.consulta(sql,valor);
+        return sers;
+    }
+    async listarPorCarro(car_id,db){
+        const sql = "SELECT * FROM servico where car_id=?";
+        const valor = [car_id];
+        const sers = await db.consulta(sql,valor);
+        return sers;
+    }
 }
