@@ -20,7 +20,9 @@ module.exports={
         else{
             
             for(let i=1;i<=qtde_parcelas;i++){
-                let date2 = date.setDate(date.getDate()+30);
+                date.setDate(date.getDate()+30);
+                let date2 = new Date(date);
+            
                 servico.addContaReceber(new ContaReceber(i,servico.getCod(),servico.getTotal()/qtde_parcelas,date2));
     
             }
@@ -32,12 +34,12 @@ module.exports={
     },
     async cancelar(request,response) {
  
-        const {ser_cod,qtde_parcelas} = request.body;
+        const {ser_cod} = request.body;
         console.log(ser_cod);
         let date = new Date();
         const con = await db.conecta();
         let servico = await new Servico().procurarCod(ser_cod,db);
-        servico.setFim(date);
+        servico.setFim(null);
         servico.setStatus(false);
         await servico.alterar(db);
         if(qtde_parcelas===1){
@@ -48,6 +50,7 @@ module.exports={
             
             for(let i=1;i<=qtde_parcelas;i++){
                 let date2 = date.setDate(date.getDate()+30);
+                console.log("date2: "+date2);
                 servico.addContaReceber(new ContaReceber(i,servico.getCod(),servico.getTotal()/qtde_parcelas,date2));
     
             }

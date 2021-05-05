@@ -4,7 +4,7 @@ module.exports=class ContaReceberDAO{
  
   
         const sql = "INSERT INTO conta_receber (con_cod,ser_cod,con_valor,con_dtVencimento) VALUES (?, ?, ?, ?)";
-        
+  
         const valor = [conta.getCod(),conta.getSerCod(),conta.getValor(),conta.getDtVenc()];
         const result = await db.manipula(sql,valor);
         
