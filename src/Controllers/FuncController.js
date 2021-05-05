@@ -5,8 +5,6 @@ module.exports={
     async gravar(request,response) {
  
         const {pes_cod,fun_anoInicio,fun_senha,fun_nivel} = request.body;
-       
-        //verificar se o professor ja esta cadastrado
         const con = await db.conecta();
         const sql = "INSERT INTO Funcionario (pes_cod,fun_anoInicio,fun_senha,fun_nivel,fun_status) VALUES (?, ?, ?,?,true)";
         
@@ -55,22 +53,28 @@ module.exports={
     async deletar(request,response){
         const cod = request.params.cod;
         const con = await db.conecta();
-        const sql = "DELETE FROM Funcionario WHERE pes_cod=?";
-        
-        const valor = [cod];
-        var result = await db.manipula(sql,valor);
-        const sql2 = "DELETE FROM Pessoa WHERE pes_cod=?";
-        result = await db.manipula(sql2,valor);
-        return response.json(result);
-    },
-    async deletarLogico(request,response){
-        const cod = request.params.cod;
-        const con = await db.conecta();
-        const sql = "UPDATE Funcionario SET fun_status = ? "+
+        let valor = [cod];
+        let sql="SELECT * from servico where fun_cod=?";
+        let result=await db.consulta(sql,valor);
+        if(result.data.length>0){
+            sql = "UPDATE Funcionario SET fun_status = ? "+
                     "WHERE pes_cod = ?";
         
-        const valor = [false,cod];
-        const result = await db.consulta(sql,valor);
-        return response.json(result.data);
+            valor = [false,cod];
+            result = await db.manipula(sql,valor);
+            sql = "UPDATE servico SET fun_cod=? "+
+                    "WHERE fun_cod = ? and ser_status=true";
+        
+            valor = [null,cod];
+            result = await db.manipula(sql,valor);
+        } 
+        else{
+            sql = "DELETE FROM Funcionario WHERE pes_cod=?";
+            result = await db.manipula(sql,valor);
+            sql = "DELETE FROM Pessoa WHERE pes_cod=?";
+            result = await db.manipula(sql,valor);
+        }
+        console.log(result);
+        return response.json(result);
     }
 }

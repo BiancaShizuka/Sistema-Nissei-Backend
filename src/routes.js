@@ -22,7 +22,6 @@ routes.get('/pecafiltro/:filtro',pecaController.listarPorFiltro);
 
 routes.post('/carro',carroController.gravar);
 routes.put('/carro',carroController.alterar);
-routes.put('/carroLog/:cod',carroController.deletarLogico);
 routes.get('/carros',carroController.listar);
 routes.get('/carro/:cod',carroController.procurarCod);
 routes.get('/carroPes/:cod',carroController.procurarCodPessoa);
@@ -63,7 +62,6 @@ routes.delete('/contato/:cod',contatoCtrl.excluir);
 
 routes.post('/func',funcController.gravar);
 routes.put('/func',funcController.alterar);
-routes.put('/funcLog/:cod',funcController.deletarLogico);
 routes.get('/func/:email/:senha',funcController.procurarUser);
 routes.get('/func',funcController.listar);
 routes.get('/func/:cod',funcController.procurarFunc);
@@ -76,7 +74,6 @@ routes.get('/servico/:cod',servicoCtrl.procurarServico);
 routes.get('/servicoFiltro',servicoCtrl.listarFiltros);
 routes.get('/servico',servicoCtrl.listar);
 routes.put('/servico',servicoCtrl.alterar);
-routes.put('/servicoCarro/:cod',servicoCtrl.alterarCarroNulo);
 routes.put('/servicoFuncNull/:cod',servicoCtrl.alterarFuncionarioNulo);
 routes.put('/servicoFechar',servicoCtrl.alterarStatus);
 

@@ -71,5 +71,13 @@ module.exports={
         const valor = [false,cod];
         const result = await db.manipula(sql,valor);
         return response.json(result);
+    },
+    async listarServicoPecas(request,response){
+        const {pec_cod} = request.params;
+        const con = await db.conecta();
+        const sql = "SELECT * FROM servicopecas s where pec_cod=?";
+        const valor = [pec_cod];
+        const pecas = await db.consulta(sql,valor);
+        return response.json(pecas.data);
     }
 }
