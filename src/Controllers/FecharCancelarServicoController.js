@@ -39,25 +39,18 @@ module.exports={
         let date = new Date();
         const con = await db.conecta();
         let servico = await new Servico().procurarCod(ser_cod,db);
-        servico.setFim(null);
-        servico.setStatus(false);
-        await servico.alterar(db);
-        if(qtde_parcelas===1){
-            servico.addContaReceber(new ContaReceber(1,servico.getCod(),servico.getTotal(),date));
-           
-        }
-        else{
-            
-            for(let i=1;i<=qtde_parcelas;i++){
-                let date2 = date.setDate(date.getDate()+30);
-                console.log("date2: "+date2);
-                servico.addContaReceber(new ContaReceber(i,servico.getCod(),servico.getTotal()/qtde_parcelas,date2));
-    
-            }
+        let i=0;
+        while(i<servico.getContas().length && servico.getContas()[i].getDtPgto()==null)
+            i++;
+        if(i===servico.getContas().length){
+            servico. deletarContaServico(db);
+            servico.setFim(null);
+            servico.setStatus(true);
+            await servico.alterar(db);
+        
         }
         
-        for(let i=1;i<=qtde_parcelas;i++)
-            await servico.getContas()[i-1].gravar(db);
+      
         return response.json(servico);
     },
     

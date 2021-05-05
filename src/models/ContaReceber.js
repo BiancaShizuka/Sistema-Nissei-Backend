@@ -35,9 +35,7 @@ module.exports=class ContaReceber{
         let result = await new ContaReceberDAO().alterar(this,db);
         return result;
     }
-    async deletarContaServico(){
-        let result = await new ContaReceberDAO().alterar(this.ser_cod,db);
-    }
+    
     async getConta(con_cod,ser_cod,db){
    
         let resp= await new ContaReceberDAO().consultar(con_cod,ser_cod,db);

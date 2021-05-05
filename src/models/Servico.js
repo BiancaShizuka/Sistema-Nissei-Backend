@@ -4,6 +4,7 @@ const Cliente=require('./Cliente');
 const ServicoPeca=require('./ServicoPeca');
 const ServicoDAO=require('../DAOs/ServicoDAO');
 const ContaReceber = require('./ContaReceber');
+const ContaReceberDAO = require('../DAOs/ContaReceberDAO');
 module.exports=class Servico{
     constructor(cod,carro,cliente,funcionario,descricao,maoObra,inicio,status){
         this.ser_cod=cod;
@@ -101,6 +102,10 @@ module.exports=class Servico{
         servico.setContas(await (new ContaReceber().listarContasServico(cod,db)));
         servico.calcularTotal();
         return servico;
+    }
+    async deletarContaServico(db){
+        this.contasReceber=[];
+        let result = await new ContaReceberDAO().deletarPorServico(this.ser_cod,db);
     }
     async listarPorCliente(cli_cod,db){
         const resp=await new ServicoDAO().listarPorCliente(cli_cod,db);

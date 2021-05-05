@@ -28,7 +28,7 @@ module.exports=class ContaReceberDAO{
         
         const valor = [ser_cod];
         const result = await db.manipula(sql,valor);
-    
+        return result;
     }
     async consultar(con_cod,ser_cod,db){
         const sql = "select * from conta_receber where con_cod=? and ser_cod=? ";
