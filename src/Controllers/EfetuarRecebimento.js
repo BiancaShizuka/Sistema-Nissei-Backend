@@ -25,10 +25,7 @@ module.exports={
         const con = await db.conecta();
 
         const contas = await new ContaReceber().listarContasServico(ser_cod,db);
-        
-        
-   
-        
+
         return response.json(contas);
     },
     

@@ -3,6 +3,7 @@ const Funcionario=require('./Funcionario');
 const Cliente=require('./Cliente');
 const ServicoPeca=require('./ServicoPeca');
 const ServicoDAO=require('../DAOs/ServicoDAO');
+const ContaReceber = require('./ContaReceber');
 module.exports=class Servico{
     constructor(cod,carro,cliente,funcionario,descricao,maoObra,inicio,status){
         this.ser_cod=cod;
@@ -14,8 +15,9 @@ module.exports=class Servico{
         this.ser_total=0;
         this.ser_status=status;
         this.ser_inicio=inicio;
-        this.ser_saida=null;
+        this.ser_fim=null;
         this.pecas=[];
+        this.contasReceber=[];
     }
     getCod(){
         return this.ser_cod;
@@ -41,23 +43,47 @@ module.exports=class Servico{
     getStatus(){
         return this.ser_status;
     }
+    setStatus(status){
+        this.ser_status=status;
+    }
+    setPecas(pecas){
+        this.pecas=pecas;
+    }
     getPecas(){
         return this.pecas;
     }
     addPecaLista(peca){
         this.pecas.push(peca);
     }
-    setPecas(pecas){
-        this.pecas=pecas;
+    getContas(){
+        return this.contasReceber;
+    }
+    addContaReceber(conta){
+        this.contasReceber.push(conta);
+    }
+    
+    setContas(contas){
+        this.contasReceber=contas;
     }
     setTotal(total){
         this.total=total;
     }
+    getTotal(){
+        return this.total;
+    }
+    setFim(fim){
+        this.ser_fim=fim;
+    }
+    getFim(){
+        return this.ser_fim;
+    }
+    
     async gravar(db) {
         const resp=await new ServicoDAO().gravar(this,db);
         this.ser_cod=resp.lastId; 
     }
     async alterar(db){
+    
         await new ServicoDAO().alterar(this,db);
     }
     async procurarCod(cod,db){
@@ -72,6 +98,7 @@ module.exports=class Servico{
                         funcionario,resp.data[0].ser_descricao,resp.data[0].ser_maoObra,
                         resp.data[0].ser_inicio,resp.data[0].ser_status);
         servico.setPecas(await (new ServicoPeca().listar(cod,db)));
+        servico.setContas(await (new ContaReceber().listarContasServico(cod,db)));
         servico.calcularTotal();
         return servico;
     }

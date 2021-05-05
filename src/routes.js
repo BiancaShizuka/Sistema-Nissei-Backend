@@ -102,4 +102,6 @@ const contaReceberCtr=require('./Controllers/EfetuarRecebimento');
 routes.put('/contaReceber',contaReceberCtr.alterar);
 routes.get('/contaReceber/:ser_cod',contaReceberCtr.listarContas);
 
+const fecharServicoCtr=require('./Controllers/FecharServico');
+routes.post('/fecharServico',fecharServicoCtr.fechar);
 module.exports=routes;

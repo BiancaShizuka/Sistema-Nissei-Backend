@@ -26,7 +26,7 @@ module.exports=class ContaReceber{
     getDtPgto(){
         return this.con_dtPgto;
     }
-    async gravar(){
+    async gravar(db){
         let result = await new ContaReceberDAO().gravar(this,db);
 
     }

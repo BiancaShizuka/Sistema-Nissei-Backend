@@ -2,13 +2,16 @@
 module.exports=class ServicoDAO{
     async alterar(ser,db){
         const sql = "UPDATE servico SET car_id=? ,fun_cod=?,"+
-                    "ser_descricao=?,ser_maoObra=?,ser_inicio=?, "+
+                    "ser_descricao=?,ser_maoObra=?,ser_inicio=?, ser_fim=?, "+
                     "ser_status=? "+
                     "WHERE ser_cod = ?";
-        
+        console.log(ser.getFim());
+        console.log(ser.getCod());
+        console.log(ser.getStatus());
         const valor = [ser.getCarro().getId(),ser.getFuncionario().getCod(),ser.getDescricao(),
-                    ser.getMaoObra(),ser.getInicio(),ser.getStatus(),ser.getCod()];
+                    ser.getMaoObra(),ser.getInicio(),ser.getFim(),ser.getStatus(),ser.getCod()];
         const result = await db.manipula(sql,valor);
+        console.log(result)
     }
     async gravar(ser,db) {
         const sql = "INSERT INTO servico (car_id,cli_cod,fun_cod,ser_descricao,ser_maoObra,ser_inicio,ser_fim,ser_status) VALUES (?, ?, ?, ?, ?, ?,null ,?)";
