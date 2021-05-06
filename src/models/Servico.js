@@ -19,6 +19,12 @@ module.exports=class Servico{
         this.pecas=[];
         this.contasReceber=[];
     }
+    getFuncionario(){
+        return this.funcionario;
+    }
+    setFuncionario(funcionario){
+        this.funcionario=funcionario;
+    }
     getCod(){
         return this.ser_cod;
     }

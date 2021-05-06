@@ -43,7 +43,9 @@ module.exports={
         while(i<servico.getContas().length && servico.getContas()[i].getDtPgto()==null)
             i++;
         if(i===servico.getContas().length){
-        
+            console.log(servico.getFuncionario().getStatus());
+            if(servico.getFuncionario().getStatus()==0)
+                servico.setFuncionario(null);
             servico.getContas()[0].deletarContaServico(db);
             servico.setFim(null);
             servico.setStatus(true);
