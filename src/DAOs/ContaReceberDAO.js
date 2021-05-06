@@ -44,4 +44,44 @@ module.exports=class ContaReceberDAO{
         const conta = await db.consulta(sql,valor);
         return conta;
     }
+    async consultarContasFiltro(dtInicio,dtFim,status,db){
+
+        let hasParameter=false;
+
+        let valor=[];
+     
+        let sql = "SELECT * FROM conta_receber ";
+        if(dtInicio){
+            
+            sql+=" where con_dtVencimento >= ?"
+            valor.push(dtInicio);
+            hasParameter=true;
+        }
+        if(dtFim){
+            if(hasParameter)
+                sql+=" and";
+            else
+                sql+=" where";
+            hasParameter=true;
+
+            sql+=" con_dtVencimento<=?";
+            valor.push(dtFim);
+        }
+        if(status){
+            
+                
+            if(hasParameter)
+                sql+=" and";
+            else
+                sql+=" where";
+            hasParameter=true;
+            if(status=="Pagamento efetuado")
+                sql+=" con_dtPgto is not null";
+            else
+            sql+=" con_dtPgto is null";
+        }
+        console.log(sql);
+        const contas = await db.consulta(sql,valor);
+        return contas;
+    }
 }
