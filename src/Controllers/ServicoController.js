@@ -86,54 +86,5 @@ module.exports={
         
         let servicos=await new Servico().listarFiltros(cli_nome,dt_inicio,dt_saida,car_placa,status,db);
         return response.json(servicos);
-    },
-    async alterarStatus(request,response){
-        const {ser_cod,ser_total,ser_fim,ser_status} = request.body;
-        const con = await db.conecta();
-        const sql = "UPDATE servico SET ser_status=?,ser_fim=? "+
-                    "WHERE ser_cod = ?";
-        
-        const valor = [ser_status,ser_fim,ser_cod];
-        const result = await db.manipula(sql,valor);
-        return response.json(result);
-    },
-    async listar(request,response){
-        const con = await db.conecta();
-        const sql = "SELECT * FROM servico";
-        const sers = await db.consulta(sql);
-        return response.json(sers.data);
-    },
-    async alterarCarroNulo(request,response){
-        const {cod} = request.params;;
-    
-      
-        const con = await db.conecta();
-        const sql = "UPDATE servico SET car_id=? "+
-                    "WHERE car_id = ?";
-        
-        const valor = [null,cod];
-        const result = await db.manipula(sql,valor);
-        return response.json(result);
-    },
-    async alterarFuncionarioNulo(request,response){
-        const {cod} = request.params;
-        const con = await db.conecta();
-        const sql = "UPDATE servico SET fun_cod=? "+
-                    "WHERE fun_cod = ? and ser_status=true";
-        
-        const valor = [null,cod];
-        const result = await db.manipula(sql,valor);
-        return response.json(result);
     }
-    
-    /*
-    async listarPecas(request,response){
-        const {pec_cod} = request.params;
-        const con = await db.conecta();
-        const sql = "SELECT * FROM servicopecas s where pec_cod=?";
-        const valor = [pec_cod];
-        const pecas = await db.consulta(sql,valor);
-        return response.json(pecas.data);
-    }
-    */
 }

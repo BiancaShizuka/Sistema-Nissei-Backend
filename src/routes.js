@@ -72,10 +72,8 @@ routes.get('/servicoCarro/:cod',servicoCtrl.listarPorCarro);
 routes.get('/servicoCliente/:cod',servicoCtrl.listarPorCliente);
 routes.get('/servico/:cod',servicoCtrl.procurarServico);
 routes.get('/servicoFiltro',servicoCtrl.listarFiltros);
-routes.get('/servico',servicoCtrl.listar);
 routes.put('/servico',servicoCtrl.alterar);
-routes.put('/servicoFuncNull/:cod',servicoCtrl.alterarFuncionarioNulo);
-routes.put('/servicoFechar',servicoCtrl.alterarStatus);
+routes.delete('/servicopeca/:ser_cod/:pec_cod',servicoCtrl.deletarServicoPeca);
 
 routes.post('/conta',contaCtrl.gravar);
 routes.put('/conta',contaCtrl.alterar);

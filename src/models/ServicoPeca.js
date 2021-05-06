@@ -53,11 +53,11 @@ module.exports=class ServicoPeca{
     }
     async procurarServicoPeca(ser_cod,pec_cod,db){
         const result=await new ServicoPecaDAO().procurarServicoPeca(ser_cod,pec_cod,db);
-        let peca=new ServicoPeca(await new Peca().procurarCod(result.data[0].pec_cod,db),
-                                    result.data[0].uti_precoUni,result.data[0].uti_qtde);
-        await new ServicoPecaDAO().deletar(ser_cod,this,db);
+        let p=new ServicoPeca(await new Peca().procurarCod(pec_cod,db),
+                            result.data[0].uti_precoUni,result.data[0].uti_qtde);
+        return p;
     }
     async deletarServicoPeca(ser_cod,db){
-        const result=new ServicoPecaDAO().deletar(this,ser_cod,db);
+        const result=await new ServicoPecaDAO().deletar(this,ser_cod,db);
     }
 }

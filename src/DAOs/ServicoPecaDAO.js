@@ -1,5 +1,4 @@
-const ServicoPeca=require('../models/ServicoPeca');
-const Peca=require('../models/Peca');
+
 module.exports=class ServicoPeca{
     async listarPecas(pec_cod,db){
         const sql = "SELECT * FROM servicopecas s where pec_cod=?";
@@ -27,10 +26,10 @@ module.exports=class ServicoPeca{
         const result=await db.manipula(sql,valor);
         return result;
     }
-    async procurarServicoPeca(peca,ser_cod,db){
+    async procurarServicoPeca(ser_cod,pec_cod,db){
         const sql="select * from servicopecas where ser_cod=? and pec_cod=?";
-        const valor=[ser_cod,peca.getPeca().getCod()];
-        const result=await db.manipula(sql,valor);
+        const valor=[ser_cod,pec_cod];
+        const result=await db.consulta(sql,valor);
         return result;
     }
 }
