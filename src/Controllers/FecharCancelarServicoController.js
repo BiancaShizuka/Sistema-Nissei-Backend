@@ -43,6 +43,7 @@ module.exports={
         while(i<servico.getContas().length && servico.getContas()[i].getDtPgto()==null)
             i++;
         if(i===servico.getContas().length){
+        
             servico.getContas()[0].deletarContaServico(db);
             servico.setFim(null);
             servico.setStatus(true);
