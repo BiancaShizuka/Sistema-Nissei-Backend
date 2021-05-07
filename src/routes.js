@@ -13,7 +13,6 @@ const contaCtrl=require('./Controllers/ContaReceberController');
 
 routes.post('/peca',pecaController.gravar);
 routes.put('/peca',pecaController.alterar);
-routes.put('/pecaLog/:cod',pecaController.deletarLogico);
 routes.get('/peca/:cod',pecaController.procurarCod);
 routes.get('/peca',pecaController.listar);
 routes.delete('/peca/:cod',pecaController.deletar);
