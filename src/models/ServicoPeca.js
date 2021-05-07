@@ -57,7 +57,4 @@ module.exports=class ServicoPeca{
                             result.data[0].uti_precoUni,result.data[0].uti_qtde);
         return p;
     }
-    async deletarServicoPeca(ser_cod,db){
-        const result=await new ServicoPecaDAO().deletar(this,ser_cod,db);
-    }
 }

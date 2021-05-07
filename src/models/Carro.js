@@ -27,4 +27,18 @@ module.exports=class Carro{
             result.data[0].car_km,null,result.data[0].status);
         return carro;
     }
+    async listarPorCliente(cod,db){
+        let result=await new CarroDAO().listarPorCliente(cod,db);
+        let carros=[];
+        let marca=null;
+        for(let i=0;i<result.data.length;i++){
+            if(result.data[i].mar_cod!=null)
+                marca=await (new Marca().procurarCod(result.data[i].mar_cod,db));
+            carros.push(new Carro(result.data[i].car_id,result.data[i].car_placa,result.data[i].car_ano,
+                result.data[i].car_modelo,
+                result.data[i].car_km,marca,result.data[i].status));
+            marca=null;
+        }
+        return carros;
+    }
 }

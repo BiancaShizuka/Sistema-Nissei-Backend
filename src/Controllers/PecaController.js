@@ -27,11 +27,7 @@ module.exports={
         
         const valor = [pec_descricao];
         const result = await db.manipula(sql,valor);
-        console.log(result.lastId);
-        const sql2 = "SELECT * FROM peca WHERE pec_cod=?";
-        const valor2=[result.lastId];
-        const result2 = await db.consulta(sql2,valor2);
-        return response.json(result2.data);
+        return response.json(result.data);
     },
     async alterar(request,response){
         const {pec_cod,pec_descricao} = request.body;

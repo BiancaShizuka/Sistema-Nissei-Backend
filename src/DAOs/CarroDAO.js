@@ -6,4 +6,11 @@ module.exports=class CarroDAO{
         const result = await db.consulta(sql,valor);
         return result;
     }
+    async listarPorCliente(cod,db){
+        const sql = "SELECT * FROM Carro WHERE pes_cod=? and car_status=true";
+        
+        const valor = [cod];
+        const result = await db.consulta(sql,valor);
+        return result;
+    }
 }

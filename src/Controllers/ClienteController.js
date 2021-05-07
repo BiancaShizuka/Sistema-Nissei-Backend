@@ -1,6 +1,7 @@
 const axios = require('axios');
 //const mysql = require('mysql2/promise');
 const db = require('../models/Database');
+const Cliente=require('../models/Cliente');
 module.exports={
     async gravar(request,response) {
  
@@ -30,13 +31,13 @@ module.exports={
     },
     async procurarCliente(request,response){
         const {cod} = request.params;
-        const con = await db.conecta();
+        const con = await db.conecta();/*
         const sql = "SELECT * FROM Cliente WHERE pes_cod=?";
         
         const valor = [cod];
-        const result = await db.consulta(sql,valor);
-
-        return response.json(result.data);
+        const result = await db.consulta(sql,valor);*/
+        const clientes=await new Cliente().procurarCod(cod,db);
+        return response.json(clientes);
     },
     async listar(request,response){
         const con = await db.conecta();

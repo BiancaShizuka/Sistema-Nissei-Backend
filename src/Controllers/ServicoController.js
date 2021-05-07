@@ -30,7 +30,7 @@ module.exports={
         return response.json(servico);
     },
     async alterar(request,response){
-        const {ser_cod,car_id,fun_cod,ser_descricao,ser_maoObra,ser_inicio,pecas,ser_status} = request.body;
+        const {ser_cod,car_id,fun_cod,ser_descricao,ser_maoObra,ser_inicio,pecas,pecasExc,ser_status} = request.body;
         const con = await db.conecta();
         let servico=new Servico(ser_cod,await new Carro().procurarCod(car_id,db),
                                 null,
@@ -45,6 +45,15 @@ module.exports={
                                                 pecas[i].uti_qtde));
         }
         await servico.alterar(db);
+
+        let pec;
+        for(let i=0;i<pecasExc.length;i++){
+            pec=new ServicoPeca(await new Peca().procurarCod(pecasExc[i].pec_cod,db),
+                                                    pecasExc[i].uti_precoUni,
+                                                    pecasExc[i].uti_qtde);
+            await pec.deletar(servico.getCod(),db);
+        }
+
         for(let i=0;i<servico.getPecas().length;i++){
             if(pecas[i].banco==0) //apenas aqueles que ainda nao estao
             await servico.getPecas()[i].gravar(servico.getCod(),db);
