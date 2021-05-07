@@ -75,17 +75,10 @@ routes.get('/servicoFiltro',servicoCtrl.listarFiltros);
 routes.put('/servico',servicoCtrl.alterar);
 routes.delete('/servicopeca/:ser_cod/:pec_cod',servicoCtrl.deletarServicoPeca);
 
-routes.post('/conta',contaCtrl.gravar);
-routes.put('/conta',contaCtrl.alterar);
-routes.delete('/conta/:con_cod/:ser_cod',contaCtrl.deletar);
-routes.delete('/contaPorServico/:ser_cod',contaCtrl.deletarPorServico);
-routes.get('/conta/:ser_cod',contaCtrl.listar);
-routes.get('/contaPaga/:ser_cod',contaCtrl.listarContasPagas);
-routes.get('/contaFiltros',contaCtrl.listarFiltros);
-
 const contaReceberCtr=require('./Controllers/EfetuarRecebimentoController');
 routes.put('/contaReceber',contaReceberCtr.alterar);
 routes.get('/contaReceber/:ser_cod',contaReceberCtr.listarContas);
+routes.get('/contaReceberFiltros',contaReceberCtr.listarContasFiltro);
 
 const fecharServicoCtr=require('./Controllers/FecharCancelarServicoController');
 routes.post('/fecharServico',fecharServicoCtr.fechar);
