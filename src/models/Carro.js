@@ -36,7 +36,7 @@ module.exports=class Carro{
                 marca=await (new Marca().procurarCod(result.data[i].mar_cod,db));
             carros.push(new Carro(result.data[i].car_id,result.data[i].car_placa,result.data[i].car_ano,
                 result.data[i].car_modelo,
-                result.data[i].car_km,marca,result.data[i].status));
+                result.data[i].car_km,marca,result.data[i].car_status));
             marca=null;
         }
         return carros;

@@ -31,11 +31,7 @@ module.exports={
     },
     async procurarCliente(request,response){
         const {cod} = request.params;
-        const con = await db.conecta();/*
-        const sql = "SELECT * FROM Cliente WHERE pes_cod=?";
-        
-        const valor = [cod];
-        const result = await db.consulta(sql,valor);*/
+        const con = await db.conecta();
         const clientes=await new Cliente().procurarCod(cod,db);
         return response.json(clientes);
     },

@@ -9,7 +9,6 @@ const pecaController=require('./Controllers/PecaController');
 const funcController=require('./Controllers/FuncController');
 const contatoCtrl=require('./Controllers/ContatoController');
 const servicoCtrl=require('./Controllers/ServicoController');
-const contaCtrl=require('./Controllers/ContaReceberController');
 
 routes.post('/peca',pecaController.gravar);
 routes.put('/peca',pecaController.alterar);

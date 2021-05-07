@@ -17,7 +17,6 @@ module.exports=class Cliente extends Pessoa{
     }
     async procurarCod(cod,db){
         const resp=await new ClienteDAO().procurarCod(cod,db);
-        console.log(resp.data);
         let cliente=new Cliente(
             resp.data[0].pes_cod,resp.data[0].pes_nome,resp.data[0].pes_cpf,resp.data[0].pes_sexo,resp.data[0].pes_email,
             resp.data[0].cli_rua,resp.data[0].cli_bairro,resp.data[0].cli_cidade,resp.data[0].cli_uf,
