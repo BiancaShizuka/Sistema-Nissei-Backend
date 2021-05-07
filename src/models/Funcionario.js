@@ -22,7 +22,7 @@ module.exports=class Funcionario extends Pessoa{
         console.log(resp);
         let funcionario=await new Funcionario(
             resp.data[0].pes_cod,resp.data[0].pes_nome,resp.data[0].pes_cpf,resp.data[0].pes_sexo,resp.data[0].pes_email,
-            resp.data[0].fun_ano,resp.data[0].dun_senha,resp.data[0].fun_status,resp.data[0].fun_nivel
+            resp.data[0].fun_anoInicio,resp.data[0].fun_senha,resp.data[0].fun_status,resp.data[0].fun_nivel
         );
        
         return funcionario;
