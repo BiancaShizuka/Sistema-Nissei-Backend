@@ -110,4 +110,10 @@ module.exports=class ServicoDAO{
         const sers = await db.consulta(sql,valor);
         return sers;
     }
+    async listarPorCarroNull(db){
+        const sql = "SELECT * FROM servico where car_id is null";
+ 
+        const sers = await db.consulta(sql);
+        return sers;
+    }
 }

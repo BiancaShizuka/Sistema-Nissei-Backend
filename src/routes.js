@@ -67,6 +67,7 @@ routes.delete('/func/:cod',funcController.deletar);
 
 routes.post('/servico',servicoCtrl.gravar);
 routes.get('/servicoCarro/:cod',servicoCtrl.listarPorCarro);
+routes.get('/servicoCarroNull',servicoCtrl.listarPorCarroNull);
 routes.get('/servicoCliente/:cod',servicoCtrl.listarPorCliente);
 routes.get('/servico/:cod',servicoCtrl.procurarServico);
 routes.get('/servicoFiltro',servicoCtrl.listarFiltros);

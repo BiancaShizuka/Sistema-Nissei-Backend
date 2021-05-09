@@ -94,6 +94,11 @@ module.exports={
         const servicos=await new Servico().listarPorCarro(cod,db);
         return response.json(servicos);
     },
+    async listarPorCarroNull(request,response){
+        const con = await db.conecta();
+        const servicos=await new Servico().listarPorCarroNull(db);
+        return response.json(servicos);
+    },
     async listarFiltros(request,response){
         const cli_nome = request.query["cliente"];
         const dt_inicio = request.query["dt_inicio"];
