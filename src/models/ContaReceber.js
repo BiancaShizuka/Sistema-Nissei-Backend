@@ -47,7 +47,18 @@ module.exports=class ContaReceber{
    
         let result = await new ContaReceberDAO().deletarPorServico(this,ser_cod,db);
     }
-  
+    async listarContasServico(ser_cod,db){
+        let resp= await new ContaReceberDAO().consultarContasServico(ser_cod,db);
+        let contas=[];
+        for(let i=0;i<resp.data.length;i++){
+            contas.push(
+                new ContaReceber(resp.data[i].con_cod,resp.data[i].ser_cod,resp.data[i].con_valor,resp.data[i].con_dtVencimento,resp.data[i].con_dtPgto)
+                
+            )
+
+        }
+        return contas;
+    }
     async listarContasFiltro(dtInicio,dtFim,status,db){
         let resp= await new ContaReceberDAO().consultarContasFiltro(dtInicio,dtFim,status,db);
         let contas=[];

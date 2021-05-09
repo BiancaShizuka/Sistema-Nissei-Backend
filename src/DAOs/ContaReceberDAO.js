@@ -36,17 +36,23 @@ module.exports=class ContaReceberDAO{
         const conta = await db.consulta(sql,valor);
         return conta;
     }
-
+    async consultarContasServico(ser_cod,db){
+        const sql = "select * from conta_receber where ser_cod=? ";
+              
+        const valor = [ser_cod];
+        const conta = await db.consulta(sql,valor);
+        return conta;
+    }
     async consultarContasFiltro(dtInicio,dtFim,status,db){
 
         let hasParameter=false;
 
         let valor=[];
      
-        let sql = "SELECT * FROM conta_receber ";
+        let sql = "SELECT * FROM conta_receber c,Servico s ";
         if(dtInicio){
             
-            sql+=" where con_dtVencimento >= ?"
+            sql+=" where c.con_dtVencimento >= ?"
             valor.push(dtInicio);
             hasParameter=true;
         }
@@ -57,7 +63,7 @@ module.exports=class ContaReceberDAO{
                 sql+=" where";
             hasParameter=true;
 
-            sql+=" con_dtVencimento<=?";
+            sql+=" c.con_dtVencimento<=?";
             valor.push(dtFim);
         }
         if(status){
@@ -69,11 +75,16 @@ module.exports=class ContaReceberDAO{
                 sql+=" where";
             hasParameter=true;
             if(status=="Pagamento efetuado")
-                sql+=" con_dtPgto is not null";
+                sql+=" c.con_dtPgto is not null";
             else
-            sql+=" con_dtPgto is null";
+            sql+=" c.con_dtPgto is null";
         }
-        console.log(sql);
+        if(hasParameter)
+            sql+=" and";
+        else
+            sql+=" where";
+        sql+=" s.ser_status=true and s.ser_cod=c.ser_cod";
+     
         const contas = await db.consulta(sql,valor);
         return contas;
     }
