@@ -15,11 +15,10 @@ module.exports=class ServicoDAO{
                     "ser_status=? "+
                     "WHERE ser_cod = ?";
 
-        const valor = [ser.getCarro().getId(),funcionario,ser.getDescricao(),
+        const valor = [carro,funcionario,ser.getDescricao(),
                     ser.getMaoObra(),ser.getInicio(),ser.getFim(),ser.getStatus(),ser.getCod()];
-                    console.log("fim: "+ser.getFim());
         const result = await db.manipula(sql,valor);
-  
+        console.log(result);
     }
     async gravar(ser,db) {
         const sql = "INSERT INTO servico (car_id,cli_cod,fun_cod,ser_descricao,ser_maoObra,ser_inicio,ser_fim,ser_status) VALUES (?, ?, ?, ?, ?, ?,null ,?)";
@@ -47,7 +46,7 @@ module.exports=class ServicoDAO{
         let hasParameter=false;
         let valor=[];
         let sql;
-        sql="select s.ser_cod,s.cli_cod as cli_cod,s.fun_cod,c.car_id,s.ser_inicio,ser_status";
+        sql="select s.ser_cod,s.ser_fim,s.cli_cod as cli_cod,s.fun_cod,c.car_id,s.ser_inicio,ser_status";
         sql+=" from (Servico s";
         sql+=" left join Carro c on s.car_id=c.car_id"; 
         sql+=" left join Pessoa p on s.cli_cod=p.pes_cod";

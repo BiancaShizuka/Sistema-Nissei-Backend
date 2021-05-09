@@ -17,7 +17,8 @@ module.exports={
                                 ser_descricao,
                                 ser_maoObra,
                                 ser_inicio,
-                                ser_status);
+                                ser_status,
+                                null);
         for(let i=0;i<pecas.length;i++){
             servico.addPecaLista(new ServicoPeca(await new Peca().procurarCod(pecas[i].pec_cod,db),
                                                 pecas[i].uti_precoUni,
@@ -38,7 +39,8 @@ module.exports={
                                 ser_descricao,
                                 ser_maoObra,
                                 ser_inicio,
-                                ser_status);
+                                ser_status,
+                                null);
         for(let i=0;i<pecas.length;i++){
             servico.addPecaLista(new ServicoPeca(await new Peca().procurarCod(pecas[i].pec_cod,db),
                                                 pecas[i].uti_precoUni,

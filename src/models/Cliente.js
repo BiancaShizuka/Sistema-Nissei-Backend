@@ -12,6 +12,9 @@ module.exports=class Cliente extends Pessoa{
         this.cli_cep=cep;
         this.carros=carros;
     }
+    getStatus(){
+        return this.cli_status;
+    }
     setCarros(carros){
         this.carros=carros;
     }

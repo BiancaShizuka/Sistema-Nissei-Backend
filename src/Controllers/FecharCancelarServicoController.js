@@ -11,7 +11,6 @@ module.exports={
         const con = await db.conecta();
         let servico = await new Servico().procurarCod(ser_cod,db);
         servico.setFim(date);
-        servico.setStatus(false);
         await servico.alterar(db);
         if(qtde_parcelas===1){
             servico.addContaReceber(new ContaReceber(1,servico.getCod(),servico.getTotal(),date));
@@ -42,15 +41,15 @@ module.exports={
         while(i<servico.getContas().length && servico.getContas()[i].getDtPgto()==null)
             i++;
         if(i===servico.getContas().length){
-            console.log(servico.getFuncionario().getStatus());
-            if(servico.getFuncionario().getStatus()==0)
+            //console.log(servico.getFuncionario().getStatus());
+            if(servico.getFuncionario()!==null && servico.getFuncionario().getStatus()==0)
                 servico.setFuncionario(null);
-     
+            if(servico.getCarro()!==null && servico.getCarro().getStatus==0)
+                servico.setCaro(null);
             for(let j=0;j<servico.getContas().length;j++){
                 servico.getContas()[j].deletarContaServico(ser_cod,db);
             }
             servico.setFim(null);
-            servico.setStatus(true);
             await servico.alterar(db);
         
         }

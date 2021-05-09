@@ -16,6 +16,9 @@ module.exports=class Carro{
     getPlaca(){
         return this.car_placa;
     }
+    getStatus(){
+        return this.car_status;
+    }
     async procurarCod(cod_carro,db){
         let result=await new CarroDAO().procurarCod(cod_carro,db);
         let carro;

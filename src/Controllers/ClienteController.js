@@ -44,17 +44,28 @@ module.exports={
     async deletar(request,response){
         const cod = request.params.cod;
         const con = await db.conecta();
-        const valor = [cod];
-        const sql3 = "DELETE FROM contato WHERE pes_cod=?";
-        var result = await db.manipula(sql3,valor);
-       
-        const sql = "DELETE FROM Cliente WHERE pes_cod=?";
+        let valor = [cod];
+        let sql="Select * from servico where cli_cod=?";
+        let result=await db.consulta(sql,valor);
+        if(result.data.length>0){
+            sql = "UPDATE Cliente SET cli_status = false "+
+                    "WHERE pes_cod = ?";
+            result=await db.manipula(sql,valor);
+            sql="update Servico set ser_status=false where cli_cod=?";
+            result=await db.manipula(sql,valor);
+        }else{
+            sql = "DELETE FROM contato WHERE pes_cod=?";
+            result = await db.manipula(sql,valor);
         
-        
-        result = await db.manipula(sql,valor);
+            sql = "DELETE FROM Cliente WHERE pes_cod=?";
+            result = await db.manipula(sql,valor);
       
-        const sql2 = "DELETE FROM Pessoa WHERE pes_cod=?";
-        result = await db.manipula(sql2,valor);
+            sql = "DELETE FROM Pessoa WHERE pes_cod=?";
+            result = await db.manipula(sql2,valor);
+
+            sql = "DELETE FROM Carro WHERE pes_cod=?";
+            result = await db.manipula(sql2,valor);
+        }
        
         return response.json(result);
     },
