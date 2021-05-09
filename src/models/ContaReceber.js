@@ -45,7 +45,7 @@ module.exports=class ContaReceber{
     }
     async deletarContaServico(ser_cod,db){
    
-        let result = await new ContaReceberDAO().deletarPorServico(ser_cod,db);
+        let result = await new ContaReceberDAO().deletarPorServico(this,ser_cod,db);
     }
     async listarContasServico(ser_cod,db){
         let resp= await new ContaReceberDAO().consultarContasServico(ser_cod,db);
