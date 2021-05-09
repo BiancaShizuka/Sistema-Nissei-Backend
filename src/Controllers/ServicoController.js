@@ -71,7 +71,7 @@ module.exports={
         const con = await db.conecta();
         let servico=await new Servico().procurarCod(cod,db);
         for(let i=0;i<servico.getPecas().length;i++)
-            await servico.getPecas()[i].deletar(cod);
+            await servico.getPecas()[i].deletar(cod,db);
         for(let i=0;i<servico.getContas().length;i++)
             await servico.getContas()[i].deletarContaServico(cod,db);
         await servico.excluir(db);

@@ -23,11 +23,10 @@ module.exports=class ContaReceberDAO{
     async deletarPorServico(conta,ser_cod,db){
       
     
-        const sql = "DELETE FROM conta_receber WHERE con_cod=?,ser_cod=? "
-              
-        
+        const sql = "DELETE FROM conta_receber WHERE con_cod=? and ser_cod=? "
         const valor = [conta.getCod(),ser_cod];
         const result = await db.manipula(sql,valor);
+  
         return result;
     }
     async consultar(con_cod,ser_cod,db){

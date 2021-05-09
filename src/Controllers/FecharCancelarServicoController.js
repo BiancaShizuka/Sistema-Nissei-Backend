@@ -46,6 +46,7 @@ module.exports={
             console.log(servico.getFuncionario().getStatus());
             if(servico.getFuncionario().getStatus()==0)
                 servico.setFuncionario(null);
+     
             for(let j=0;j<servico.getContas().length;j++){
                 servico.getContas()[j].deletarContaServico(ser_cod,db);
             }

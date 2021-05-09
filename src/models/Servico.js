@@ -172,7 +172,7 @@ module.exports=class Servico{
             cliente=null;
             funcionario=null;
         }
-        console.log(servicos);
+     
         return servicos;
     }
     async listarPorCarro(car_id,db){
