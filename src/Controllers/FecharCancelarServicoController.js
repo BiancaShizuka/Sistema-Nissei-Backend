@@ -20,11 +20,10 @@ module.exports={
         else{
             
             for(let i=1;i<=qtde_parcelas;i++){
-                date.setDate(date.getDate()+30);
                 let date2 = new Date(date);
             
                 servico.addContaReceber(new ContaReceber(i,servico.getCod(),servico.getTotal()/qtde_parcelas,date2));
-    
+                date.setDate(date.getDate()+30);
             }
         }
         

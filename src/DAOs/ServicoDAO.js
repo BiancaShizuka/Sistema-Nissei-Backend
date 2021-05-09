@@ -1,11 +1,15 @@
 
 module.exports=class ServicoDAO{
     async alterar(ser,db){
-        let funcionario
+        let funcionario,carro;
         if(ser.getFuncionario()==null)
             funcionario=null;
         else
             funcionario=ser.getFuncionario().getCod();
+        if(ser.getCarro()==null)
+            carro=null;
+        else
+            carro=ser.getCarro().getId();
         const sql = "UPDATE servico SET car_id=? ,fun_cod=?,"+
                     "ser_descricao=?,ser_maoObra=?,ser_inicio=?, ser_fim=?, "+
                     "ser_status=? "+
