@@ -109,10 +109,7 @@ module.exports=class Servico{
         servico.calcularTotal();
         return servico;
     }
-    async deletarContaServico(db){
-        this.contasReceber=[];
-        let result = await new ContaReceberDAO().deletarPorServico(this.ser_cod,db);
-    }
+   
     async listarPorCliente(cli_cod,db){
         const resp=await new ServicoDAO().listarPorCliente(cli_cod,db);
         let carro=null;
@@ -143,6 +140,10 @@ module.exports=class Servico{
             funcionario=null;
         }
         return servicos;
+    }
+    async excluir(db){
+        const resp = await new ServicoDAO().excluir(this,db);
+        return resp;
     }
     async listarFiltros(cli_nome,dt_inicio,dt_saida,car_placa,status,db){
         const sers = await new ServicoDAO().listarFiltros(cli_nome,dt_inicio,dt_saida,car_placa,status,db);

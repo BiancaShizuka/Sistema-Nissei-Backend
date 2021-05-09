@@ -66,6 +66,14 @@ module.exports={
         const servico=await new Servico().procurarCod(cod,db);
         return response.json(servico);
     },
+    async excluir(request,response){
+        const {cod} = request.params;
+        const con = await db.conecta();
+        let servico=await new Servico().procurarCod(cod,db);
+    
+        await servico.excluir(db);
+        return response.json(servico);
+    },
     async deletarServicoPeca(request,response){
         const ser_cod = request.params.ser_cod;
         const pec_cod = request.params.pec_cod;

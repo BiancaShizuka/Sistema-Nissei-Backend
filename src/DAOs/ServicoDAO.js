@@ -1,12 +1,17 @@
 
 module.exports=class ServicoDAO{
     async alterar(ser,db){
+        let funcionario
+        if(ser.getFuncionario()==null)
+            funcionario=null;
+        else
+            funcionario=ser.getFuncionario().getCod();
         const sql = "UPDATE servico SET car_id=? ,fun_cod=?,"+
                     "ser_descricao=?,ser_maoObra=?,ser_inicio=?, ser_fim=?, "+
                     "ser_status=? "+
                     "WHERE ser_cod = ?";
 
-        const valor = [ser.getCarro().getId(),ser.getFuncionario().getCod(),ser.getDescricao(),
+        const valor = [ser.getCarro().getId(),funcionario,ser.getDescricao(),
                     ser.getMaoObra(),ser.getInicio(),ser.getFim(),ser.getStatus(),ser.getCod()];
                     console.log("fim: "+ser.getFim());
         const result = await db.manipula(sql,valor);
@@ -26,6 +31,13 @@ module.exports=class ServicoDAO{
         const valor = [cod];
         const resp = await db.consulta(sql,valor);
         return resp;
+    }
+    async excluir(ser,db){
+        const sql = "delete from servico where ser_cod=?"
+
+        const valor = [ser.getCod()];
+        const result = await db.manipula(sql,valor);
+        return result;
     }
     async listarFiltros(cli_nome,dt_inicio,dt_saida,car_placa,status,db){
         let hasParameter=false;
