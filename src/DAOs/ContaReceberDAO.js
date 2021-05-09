@@ -36,13 +36,7 @@ module.exports=class ContaReceberDAO{
         const conta = await db.consulta(sql,valor);
         return conta;
     }
-    async consultarContasServico(ser_cod,db){
-        const sql = "select * from conta_receber where ser_cod=? ";
-              
-        const valor = [ser_cod];
-        const conta = await db.consulta(sql,valor);
-        return conta;
-    }
+
     async consultarContasFiltro(dtInicio,dtFim,status,db){
 
         let hasParameter=false;

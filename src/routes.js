@@ -77,7 +77,6 @@ routes.delete('/servico/:cod',servicoCtrl.excluir);
 
 const contaReceberCtr=require('./Controllers/EfetuarRecebimentoController');
 routes.put('/contaReceber',contaReceberCtr.alterar);
-routes.get('/contaReceber/:ser_cod',contaReceberCtr.listarContas);
 routes.get('/contaReceberFiltros',contaReceberCtr.listarContasFiltro);
 
 const fecharServicoCtr=require('./Controllers/FecharCancelarServicoController');

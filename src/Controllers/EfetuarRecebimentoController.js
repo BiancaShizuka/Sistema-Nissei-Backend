@@ -18,26 +18,8 @@ module.exports={
         return response.json(c);
     },
     
-    async listarContas(request,response) {
- 
-        const {ser_cod} = request.params;
 
-        const con = await db.conecta();
 
-        const contas = await new ContaReceber().listarContasServico(ser_cod,db);
-
-        return response.json(contas);
-    },
-    async listarContas(request,response) {
- 
-        const {ser_cod} = request.params;
-
-        const con = await db.conecta();
-
-        const contas = await new ContaReceber().listarContasServico(ser_cod,db);
-
-        return response.json(contas);
-    },
     async listarContasFiltro(request,response) {
  
         const dtInicio = request.query["dt_inicio"];
