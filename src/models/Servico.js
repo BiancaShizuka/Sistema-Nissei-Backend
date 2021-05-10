@@ -31,6 +31,9 @@ module.exports=class Servico{
     getCarro(){
         return this.carro;
     }
+    setCarro(carro){
+        this.carro=carro;
+    }
     getCliente(){
         return this.cliente;
     }

@@ -44,8 +44,11 @@ module.exports={
             //console.log(servico.getFuncionario().getStatus());
             if(servico.getFuncionario()!==null && servico.getFuncionario().getStatus()==0)
                 servico.setFuncionario(null);
-            if(servico.getCarro()!==null && servico.getCarro().getStatus()==0)
-                servico.setCaro(null);
+            console.log(servico.getCarro());
+            if(servico.getCarro()!==null && servico.getCarro().getStatus()==0){
+          
+                servico.setCarro(null);
+            }
             for(let j=0;j<servico.getContas().length;j++){
                 servico.getContas()[j].deletarContaServico(ser_cod,db);
             }

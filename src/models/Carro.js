@@ -24,10 +24,10 @@ module.exports=class Carro{
         let carro;
         if(result.data[0].mar_cod!=null)
         carro=new Carro(result.data[0].car_id,result.data[0].car_placa,result.data[0].car_ano,result.data[0].car_modelo,
-            result.data[0].car_km,await (new Marca().procurarCod(result.data[0].mar_cod,db)),result.data[0].status);
+            result.data[0].car_km,await (new Marca().procurarCod(result.data[0].mar_cod,db)),result.data[0].car_status);
         else
         carro=new Carro(result.data[0].car_id,result.data[0].car_placa,result.data[0].car_ano,result.data[0].car_modelo,
-            result.data[0].car_km,null,result.data[0].status);
+            result.data[0].car_km,null,result.data[0].car_status);
         return carro;
     }
     async listarPorCliente(cod,db){
