@@ -100,8 +100,10 @@ module.exports={
         return response.json(servicos);
     },
     async listarPorCarroNull(request,response){
+        const {cod} = request.params;
         const con = await db.conecta();
-        const servicos=await new Servico().listarPorCarroNull(db);
+
+        const servicos=await new Servico().listarPorCarroNull(cod,db);
         return response.json(servicos);
     },
     async listarFiltros(request,response){

@@ -63,7 +63,7 @@ module.exports={
             valor = [false,cod];
             result = await db.manipula(sql,valor);
             sql = "UPDATE servico SET fun_cod=? "+
-                    "WHERE fun_cod = ? and ser_status=true";
+                    "WHERE fun_cod = ? and ser_fim is null";
         
             valor = [null,cod];
             result = await db.manipula(sql,valor);

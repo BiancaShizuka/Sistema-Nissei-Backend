@@ -37,10 +37,8 @@ module.exports=class ContaReceber{
     }
     
     async getConta(con_cod,ser_cod,db){
-        console.log(con_cod);
-        console.log(ser_cod);
+
         let resp= await new ContaReceberDAO().consultar(con_cod,ser_cod,db);
-        console.log(resp.data[0]);
         return new ContaReceber(resp.data[0].con_cod,resp.data[0].ser_cod,resp.data[0].con_valor,resp.data[0].con_dtVencimento,resp.data[0].con_dtPgto)
     }
     async deletarContaServico(ser_cod,db){

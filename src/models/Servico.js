@@ -206,8 +206,8 @@ module.exports=class Servico{
         }
         return servicos;
     }
-    async listarPorCarroNull(db){
-        const sers=await new ServicoDAO().listarPorCarroNull(db);
+    async listarPorCarroNull(cod,db){
+        const sers=await new ServicoDAO().listarPorCarroNull(cod,db);
         let servicos=[];
         let carro=null;
         let cliente=null;

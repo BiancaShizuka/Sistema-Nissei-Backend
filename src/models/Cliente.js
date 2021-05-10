@@ -27,7 +27,7 @@ module.exports=class Cliente extends Pessoa{
             await new Carro().listarPorCliente(cod,db),
             resp.data[0].cli_status
         )
-        console.log(cliente);
+   
         return cliente;
     }
 }
