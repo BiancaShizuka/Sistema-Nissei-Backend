@@ -84,7 +84,7 @@ module.exports=class ContaReceberDAO{
         else
             sql+=" where";
         sql+=" s.ser_status=true and s.ser_cod=c.ser_cod";
-     
+        sql+=" order by s.ser_cod DESC, c.con_cod ASC";
         const contas = await db.consulta(sql,valor);
         return contas;
     }
