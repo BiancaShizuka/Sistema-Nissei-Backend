@@ -52,8 +52,10 @@ module.exports=class ServicoDAO{
         sql+=" left join Pessoa p on s.cli_cod=p.pes_cod";
         sql+=" left join Pessoa p2 on s.fun_cod=p2.pes_cod) ";
         if(status){
-            sql+=" where s.ser_status=?"
-            valor.push(status);
+            if(status=="1")
+                sql+=" where s.ser_fim is null"
+            else
+                sql+=" where s.ser_fim is not null"
             hasParameter=true;
         }
         
@@ -97,6 +99,7 @@ module.exports=class ServicoDAO{
             sql+=" UPPER(c.car_placa) LIKE UPPER(?)";
             valor.push("%"+car_placa+"%");
         }
+        console.log(sql);
         const result = await db.consulta(sql,valor);
         
         return result;
