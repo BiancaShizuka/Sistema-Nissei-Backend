@@ -10,24 +10,28 @@ module.exports={
         let date = new Date();
         const con = await db.conecta();
         let servico = await new Servico().procurarCod(ser_cod,db);
-        servico.setFim(date);
-        await servico.alterar(db);
-        if(qtde_parcelas===1){
-            servico.addContaReceber(new ContaReceber(1,servico.getCod(),servico.getTotal(),date));
-           
-        }
-        else{
+        if(qtde_parcelas<=3 && qtde_parcelas>=1){
             
-            for(let i=1;i<=qtde_parcelas;i++){
-                let date2 = new Date(date);
-            
-                servico.addContaReceber(new ContaReceber(i,servico.getCod(),servico.getTotal()/qtde_parcelas,date2));
-                date.setDate(date.getDate()+30);
-            }
-        }
+            servico.setFim(date);
+            await servico.alterar(db);
         
-        for(let i=0;i<qtde_parcelas;i++)
-            await servico.getContas()[i].gravar(db);
+            if(qtde_parcelas===1){
+                servico.addContaReceber(new ContaReceber(1,servico.getCod(),servico.getTotal(),date));
+            
+            }
+            else{
+                
+                for(let i=1;i<=qtde_parcelas;i++){
+                    let date2 = new Date(date);
+                
+                    servico.addContaReceber(new ContaReceber(i,servico.getCod(),servico.getTotal()/qtde_parcelas,date2));
+                    date.setDate(date.getDate()+30);
+                }
+            }
+            
+            for(let i=0;i<qtde_parcelas;i++)
+                await servico.getContas()[i].gravar(db);
+        }
         return response.json(servico);
     },
     async cancelar(request,response) {
