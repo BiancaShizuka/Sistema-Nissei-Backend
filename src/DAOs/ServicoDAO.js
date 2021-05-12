@@ -99,25 +99,31 @@ module.exports=class ServicoDAO{
             sql+=" UPPER(c.car_placa) LIKE UPPER(?)";
             valor.push("%"+car_placa+"%");
         }
+        if(hasParameter)
+            sql+=" and";
+        else
+            sql+=" where";
+        sql+=" ser_status=true"
+        sql+=" order by ser_inicio";
         console.log(sql);
         const result = await db.consulta(sql,valor);
         
         return result;
     }
     async listarPorCliente(cli_cod,db){
-        const sql = "SELECT * FROM servico where cli_cod=?";
+        const sql = "SELECT * FROM servico where cli_cod=? order by ser_inicio";
         const valor = [cli_cod];
         const sers = await db.consulta(sql,valor);
         return sers;
     }
     async listarPorCarro(car_id,db){
-        const sql = "SELECT * FROM servico where car_id=?";
+        const sql = "SELECT * FROM servico where car_id=? order by ser_inicio";
         const valor = [car_id];
         const sers = await db.consulta(sql,valor);
         return sers;
     }
     async listarPorCarroNull(cod,db){
-        const sql = "SELECT * FROM servico s where car_id is null and cli_cod=?";
+        const sql = "SELECT * FROM servico s where car_id is null and cli_cod=? order by s.ser_inicio";
         const valor = [cod];
         const sers = await db.consulta(sql,valor);
         return sers;
