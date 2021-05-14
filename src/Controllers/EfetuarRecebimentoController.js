@@ -18,17 +18,18 @@ module.exports={
         return response.json(c);
     },
     
-    async listarContas(request,response) {
+
+
+    async listarContasFiltro(request,response) {
  
-        const {ser_cod} = request.params;
+        const dtInicio = request.query["dt_inicio"];
+        const dtFim = request.query["dt_fim"];
+        const status = request.query["status"];
 
         const con = await db.conecta();
 
-        const contas = await new ContaReceber().listarContasServico(ser_cod,db);
-        
-        
-   
-        
+        const contas = await new ContaReceber().listarContasFiltro(dtInicio,dtFim,status,db);
+
         return response.json(contas);
     },
     

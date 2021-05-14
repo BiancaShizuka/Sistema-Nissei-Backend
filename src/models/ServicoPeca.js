@@ -46,9 +46,15 @@ module.exports=class ServicoPeca{
         let lista=[];
         for(let i=0;i<pecas.data.length;i++){
             lista.push(new ServicoPeca(await new Peca().procurarCod(pecas.data[i].pec_cod,db),
-                    pecas.data[1].uti_precoUni,pecas.data[1].uti_qtde));
+                    pecas.data[i].uti_precoUni,pecas.data[i].uti_qtde));
             lista[i].calculaTotal();
         }
         return lista;
+    }
+    async procurarServicoPeca(ser_cod,pec_cod,db){
+        const result=await new ServicoPecaDAO().procurarServicoPeca(ser_cod,pec_cod,db);
+        let p=new ServicoPeca(await new Peca().procurarCod(pec_cod,db),
+                            result.data[0].uti_precoUni,result.data[0].uti_qtde);
+        return p;
     }
 }

@@ -9,12 +9,9 @@ const pecaController=require('./Controllers/PecaController');
 const funcController=require('./Controllers/FuncController');
 const contatoCtrl=require('./Controllers/ContatoController');
 const servicoCtrl=require('./Controllers/ServicoController');
-const serPecaCtrl=require('./Controllers/ServicoPecaController');
-const contaCtrl=require('./Controllers/ContaReceberController');
 
 routes.post('/peca',pecaController.gravar);
 routes.put('/peca',pecaController.alterar);
-routes.put('/pecaLog/:cod',pecaController.deletarLogico);
 routes.get('/peca/:cod',pecaController.procurarCod);
 routes.get('/peca',pecaController.listar);
 routes.delete('/peca/:cod',pecaController.deletar);
@@ -23,7 +20,6 @@ routes.get('/pecafiltro/:filtro',pecaController.listarPorFiltro);
 
 routes.post('/carro',carroController.gravar);
 routes.put('/carro',carroController.alterar);
-routes.put('/carroLog/:cod',carroController.deletarLogico);
 routes.get('/carros',carroController.listar);
 routes.get('/carro/:cod',carroController.procurarCod);
 routes.get('/carroPes/:cod',carroController.procurarCodPessoa);
@@ -64,7 +60,6 @@ routes.delete('/contato/:cod',contatoCtrl.excluir);
 
 routes.post('/func',funcController.gravar);
 routes.put('/func',funcController.alterar);
-routes.put('/funcLog/:cod',funcController.deletarLogico);
 routes.get('/func/:email/:senha',funcController.procurarUser);
 routes.get('/func',funcController.listar);
 routes.get('/func/:cod',funcController.procurarFunc);
@@ -72,34 +67,19 @@ routes.delete('/func/:cod',funcController.deletar);
 
 routes.post('/servico',servicoCtrl.gravar);
 routes.get('/servicoCarro/:cod',servicoCtrl.listarPorCarro);
+routes.get('/servicoCarroNull/:cod',servicoCtrl.listarPorCarroNull);
 routes.get('/servicoCliente/:cod',servicoCtrl.listarPorCliente);
-routes.get('/servicoFuncionario/:cod',servicoCtrl.listarPorFuncionario);
 routes.get('/servico/:cod',servicoCtrl.procurarServico);
 routes.get('/servicoFiltro',servicoCtrl.listarFiltros);
-routes.get('/servico',servicoCtrl.listar);
-routes.get('/servicoInfo/:cod',servicoCtrl.consultarServico);
 routes.put('/servico',servicoCtrl.alterar);
-routes.put('/servicoCarro/:cod',servicoCtrl.alterarCarroNulo);
-routes.put('/servicoFuncNull/:cod',servicoCtrl.alterarFuncionarioNulo);
-routes.put('/servicoFechar',servicoCtrl.alterarStatus);
+routes.delete('/servicopeca/:ser_cod/:pec_cod',servicoCtrl.deletarServicoPeca);
+routes.delete('/servico/:cod',servicoCtrl.excluir);
 
-routes.post('/servicopeca',serPecaCtrl.gravar);
-routes.put('/servicopeca',serPecaCtrl.alterar);
-routes.delete('/servicopeca/:ser_cod/:pec_cod',serPecaCtrl.deletar);
-routes.get('/servicopeca/:ser_cod',serPecaCtrl.listar);
-routes.get('/servicoPecasPeca/:pec_cod',serPecaCtrl.listarPecas);
-
-
-routes.post('/conta',contaCtrl.gravar);
-routes.put('/conta',contaCtrl.alterar);
-routes.delete('/conta/:con_cod/:ser_cod',contaCtrl.deletar);
-routes.delete('/contaPorServico/:ser_cod',contaCtrl.deletarPorServico);
-routes.get('/conta/:ser_cod',contaCtrl.listar);
-routes.get('/contaPaga/:ser_cod',contaCtrl.listarContasPagas);
-routes.get('/contaFiltros',contaCtrl.listarFiltros);
-
-const contaReceberCtr=require('./Controllers/EfetuarRecebimento');
+const contaReceberCtr=require('./Controllers/EfetuarRecebimentoController');
 routes.put('/contaReceber',contaReceberCtr.alterar);
-routes.get('/contaReceber/:ser_cod',contaReceberCtr.listarContas);
+routes.get('/contaReceberFiltros',contaReceberCtr.listarContasFiltro);
 
+const fecharServicoCtr=require('./Controllers/FecharCancelarServicoController');
+routes.post('/fecharServico',fecharServicoCtr.fechar);
+routes.put('/cancelarFechamento',fecharServicoCtr.cancelar);
 module.exports=routes;

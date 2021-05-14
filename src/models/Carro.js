@@ -16,15 +16,32 @@ module.exports=class Carro{
     getPlaca(){
         return this.car_placa;
     }
+    getStatus(){
+        return this.car_status;
+    }
     async procurarCod(cod_carro,db){
         let result=await new CarroDAO().procurarCod(cod_carro,db);
         let carro;
         if(result.data[0].mar_cod!=null)
         carro=new Carro(result.data[0].car_id,result.data[0].car_placa,result.data[0].car_ano,result.data[0].car_modelo,
-            result.data[0].car_km,await (new Marca().procurarCod(result.data[0].mar_cod,db)),result.data[0].status);
+            result.data[0].car_km,await (new Marca().procurarCod(result.data[0].mar_cod,db)),result.data[0].car_status);
         else
         carro=new Carro(result.data[0].car_id,result.data[0].car_placa,result.data[0].car_ano,result.data[0].car_modelo,
-            result.data[0].car_km,null,result.data[0].status);
+            result.data[0].car_km,null,result.data[0].car_status);
         return carro;
+    }
+    async listarPorCliente(cod,db){
+        let result=await new CarroDAO().listarPorCliente(cod,db);
+        let carros=[];
+        let marca=null;
+        for(let i=0;i<result.data.length;i++){
+            if(result.data[i].mar_cod!=null)
+                marca=await (new Marca().procurarCod(result.data[i].mar_cod,db));
+            carros.push(new Carro(result.data[i].car_id,result.data[i].car_placa,result.data[i].car_ano,
+                result.data[i].car_modelo,
+                result.data[i].car_km,marca,result.data[i].car_status));
+            marca=null;
+        }
+        return carros;
     }
 }

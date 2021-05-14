@@ -4,7 +4,7 @@ module.exports=class ContaReceberDAO{
  
   
         const sql = "INSERT INTO conta_receber (con_cod,ser_cod,con_valor,con_dtVencimento) VALUES (?, ?, ?, ?)";
-        
+  
         const valor = [conta.getCod(),conta.getSerCod(),conta.getValor(),conta.getDtVenc()];
         const result = await db.manipula(sql,valor);
         
@@ -20,15 +20,14 @@ module.exports=class ContaReceberDAO{
   
     }
 
-    async deletarPorServico(ser_cod,db){
+    async deletarPorServico(conta,ser_cod,db){
       
     
-        const sql = "DELETE FROM conta_receber WHERE ser_cod=? "
-              
-        
-        const valor = [ser_cod];
+        const sql = "DELETE FROM conta_receber WHERE con_cod=? and ser_cod=? "
+        const valor = [conta.getCod(),ser_cod];
         const result = await db.manipula(sql,valor);
-    
+  
+        return result;
     }
     async consultar(con_cod,ser_cod,db){
         const sql = "select * from conta_receber where con_cod=? and ser_cod=? ";
@@ -43,5 +42,50 @@ module.exports=class ContaReceberDAO{
         const valor = [ser_cod];
         const conta = await db.consulta(sql,valor);
         return conta;
+    }
+    async consultarContasFiltro(dtInicio,dtFim,status,db){
+
+        let hasParameter=false;
+
+        let valor=[];
+     
+        let sql = "SELECT * FROM conta_receber c,Servico s ";
+        if(dtInicio){
+            
+            sql+=" where c.con_dtVencimento >= ?"
+            valor.push(dtInicio);
+            hasParameter=true;
+        }
+        if(dtFim){
+            if(hasParameter)
+                sql+=" and";
+            else
+                sql+=" where";
+            hasParameter=true;
+
+            sql+=" c.con_dtVencimento<=?";
+            valor.push(dtFim);
+        }
+        if(status){
+            
+                
+            if(hasParameter)
+                sql+=" and";
+            else
+                sql+=" where";
+            hasParameter=true;
+            if(status=="Pagamento efetuado")
+                sql+=" c.con_dtPgto is not null";
+            else
+            sql+=" c.con_dtPgto is null";
+        }
+        if(hasParameter)
+            sql+=" and";
+        else
+            sql+=" where";
+        sql+=" s.ser_status=true and s.ser_cod=c.ser_cod";
+        sql+=" order by s.ser_cod DESC, c.con_cod ASC";
+        const contas = await db.consulta(sql,valor);
+        return contas;
     }
 }

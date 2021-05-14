@@ -27,10 +27,10 @@ module.exports={
         
         const valor = [pec_descricao];
         const result = await db.manipula(sql,valor);
-        console.log(result.lastId);
-        const sql2 = "SELECT * FROM peca WHERE pec_cod=?";
-        const valor2=[result.lastId];
-        const result2 = await db.consulta(sql2,valor2);
+        let cod=result.lastId;
+        const sql2="select * from peca where pec_cod=?";
+        const valor2=[cod];
+        const result2=await db.consulta(sql2,valor2);
         return response.json(result2.data);
     },
     async alterar(request,response){
@@ -56,20 +56,19 @@ module.exports={
     async deletar(request,response){
         const cod = request.params.cod;
         const con = await db.conecta();
-        const sql = "DELETE FROM Peca WHERE pec_cod=?";
-        
-        const valor = [cod];
-        const result = await db.manipula(sql,valor);
-        return response.json(result);
-    },
-    async deletarLogico(request,response){
-        const cod = request.params.cod;
-        const con = await db.conecta();
-        const sql = "UPDATE Peca SET pec_status = ? "+
-                    "WHERE pec_cod = ?";
-        
-        const valor = [false,cod];
-        const result = await db.manipula(sql,valor);
+        let sql = "SELECT * FROM servicopecas s where pec_cod=?";
+        let valor = [cod];
+        let result = await db.consulta(sql,valor);
+        if(result.data.length===0){
+            sql = "DELETE FROM Peca WHERE pec_cod=?";  
+            valor = [cod];
+            result = await db.manipula(sql,valor);
+        }else{
+            sql = "UPDATE Peca SET pec_status = ? "+
+            "WHERE pec_cod = ?";
+            valor = [false,cod];
+            result = await db.manipula(sql,valor);
+        }
         return response.json(result);
     }
 }

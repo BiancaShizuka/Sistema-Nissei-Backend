@@ -26,7 +26,7 @@ module.exports=class ContaReceber{
     getDtPgto(){
         return this.con_dtPgto;
     }
-    async gravar(){
+    async gravar(db){
         let result = await new ContaReceberDAO().gravar(this,db);
 
     }
@@ -35,14 +35,15 @@ module.exports=class ContaReceber{
         let result = await new ContaReceberDAO().alterar(this,db);
         return result;
     }
-    async deletarContaServico(){
-        let result = await new ContaReceberDAO().alterar(this.ser_cod,db);
-    }
+    
     async getConta(con_cod,ser_cod,db){
-   
+
         let resp= await new ContaReceberDAO().consultar(con_cod,ser_cod,db);
-     
         return new ContaReceber(resp.data[0].con_cod,resp.data[0].ser_cod,resp.data[0].con_valor,resp.data[0].con_dtVencimento,resp.data[0].con_dtPgto)
+    }
+    async deletarContaServico(ser_cod,db){
+   
+        let result = await new ContaReceberDAO().deletarPorServico(this,ser_cod,db);
     }
     async listarContasServico(ser_cod,db){
         let resp= await new ContaReceberDAO().consultarContasServico(ser_cod,db);
@@ -53,6 +54,17 @@ module.exports=class ContaReceber{
                 
             )
 
+        }
+        return contas;
+    }
+    async listarContasFiltro(dtInicio,dtFim,status,db){
+        let resp= await new ContaReceberDAO().consultarContasFiltro(dtInicio,dtFim,status,db);
+        let contas=[];
+        for(let i=0;i<resp.data.length;i++){
+            contas.push(
+                new ContaReceber(resp.data[i].con_cod,resp.data[i].ser_cod,resp.data[i].con_valor,resp.data[i].con_dtVencimento,resp.data[i].con_dtPgto)
+                
+            )
         }
         return contas;
     }

@@ -64,21 +64,25 @@ module.exports={
     },
     async deletar(request,response){
         const cod = request.params.cod;
-        
         const con = await db.conecta();
-        const sql = "DELETE FROM Carro WHERE car_id=?";
-        
-        const valor = [cod];
-        const result = await db.manipula(sql,valor);
-        return response.json(result.data);
-    },
-    async deletarLogico(request,response){
-        const cod = request.params.cod;
-        const con = await db.conecta();
-        const sql = "UPDATE carro SET car_status=? WHERE car_id = ?";
-        
-        const valor = [false,cod];
-        const result = await db.manipula(sql,valor);
+        let valor = [cod];
+        let sql="SELECT * FROM servico where car_id=?";
+        let result=await db.consulta(sql,valor);
+
+        if(result.data.length>0){
+            sql = "UPDATE carro SET car_status=? WHERE car_id = ?";
+            valor = [false,cod];
+            await db.manipula(sql,valor);
+
+            sql = "UPDATE servico SET car_id=? "+
+                    "WHERE car_id = ? and ser_fim is null";
+            valor = [null,cod];
+            result = await db.manipula(sql,valor);
+        }
+        else{
+            sql = "DELETE FROM Carro WHERE car_id=?";
+            result = await db.manipula(sql,valor);
+        }
         return response.json(result.data);
     },
     async alterarMarcaNull(request,response){
@@ -90,5 +94,5 @@ module.exports={
         const result = await db.manipula(sql,valor);
         console.log(result);
         return response.json(result.data);
-    }
+    },
 }
