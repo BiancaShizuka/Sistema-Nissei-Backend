@@ -1,21 +1,21 @@
 module.exports=class ContaReceberDAO{
  
-    async gravar(conta,db) {
+    async gravar(conta,ser_cod,db) {
  
   
         const sql = "INSERT INTO conta_receber (con_cod,ser_cod,con_valor,con_dtVencimento) VALUES (?, ?, ?, ?)";
   
-        const valor = [conta.getCod(),conta.getSerCod(),conta.getValor(),conta.getDtVenc()];
+        const valor = [conta.getCod(),ser_cod,conta.getValor(),conta.getDtVenc()];
         const result = await db.manipula(sql,valor);
         
     }
-    async alterar(conta,db){
+    async alterar(conta,ser_cod,db){
 
     
         const sql = "UPDATE conta_receber SET con_dtPgto=? "+
                     "WHERE con_cod = ? AND ser_cod=?";
         
-        const valor = [conta.getDtPgto(),conta.getCod(),conta.getSerCod()];
+        const valor = [conta.getDtPgto(),conta.getCod(),ser_cod];
         const result = await db.manipula(sql,valor);
   
     }
@@ -43,13 +43,13 @@ module.exports=class ContaReceberDAO{
         const conta = await db.consulta(sql,valor);
         return conta;
     }
-    async consultarContasFiltro(dtInicio,dtFim,status,db){
+    async consultarContasFiltro(dtInicio,dtFim,status,cliente,db){
 
         let hasParameter=false;
 
         let valor=[];
      
-        let sql = "SELECT * FROM conta_receber c,Servico s ";
+        let sql = "SELECT * FROM conta_receber c,Servico s,Pessoa p ";
         if(dtInicio){
             
             sql+=" where c.con_dtVencimento >= ?"
@@ -79,13 +79,26 @@ module.exports=class ContaReceberDAO{
             else
             sql+=" c.con_dtPgto is null";
         }
+        if(cliente){
+            if(hasParameter)
+                sql+=" and";
+            else
+                sql+=" where";
+            hasParameter=true;
+         
+            sql+=" UPPER(p.pes_nome) like upper(?)";
+     
+            valor.push("%"+cliente+"%");
+        }
         if(hasParameter)
             sql+=" and";
         else
             sql+=" where";
-        sql+=" s.ser_status=true and s.ser_cod=c.ser_cod";
-        sql+=" order by s.ser_cod DESC, c.con_cod ASC";
+        sql+=" s.ser_status=true and s.ser_cod=c.ser_cod and s.cli_cod=p.pes_cod";
+        sql+=" order by s.ser_cod ASC, c.con_cod ASC";
+      
         const contas = await db.consulta(sql,valor);
+        console.log(contas);
         return contas;
     }
 }

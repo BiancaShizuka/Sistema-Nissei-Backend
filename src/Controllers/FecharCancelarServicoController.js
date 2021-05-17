@@ -16,21 +16,21 @@ module.exports={
             await servico.alterar(db);
         
             if(qtde_parcelas===1){
-                servico.addContaReceber(new ContaReceber(1,servico.getCod(),servico.getTotal(),date));
+                servico.addContaReceber(new ContaReceber(1,servico.getTotal(),date));
             
             }
             else{
                 
                 for(let i=1;i<=qtde_parcelas;i++){
                     let date2 = new Date(date);
-                
-                    servico.addContaReceber(new ContaReceber(i,servico.getCod(),servico.getTotal()/qtde_parcelas,date2));
+                    let v=parseFloat((parseFloat(servico.getTotal()/qtde_parcelas).toFixed(1))).toFixed(2);
+                    servico.addContaReceber(new ContaReceber(i,v,date2));
                     date.setDate(date.getDate()+30);
                 }
             }
             
             for(let i=0;i<qtde_parcelas;i++)
-                await servico.getContas()[i].gravar(db);
+                await servico.getContas()[i].gravar(ser_cod,db);
         }
         return response.json(servico);
     },

@@ -11,7 +11,7 @@ module.exports={
 
         const c = await new ContaReceber().getConta(con_cod,ser_cod,db);
         c.setDtPgto(con_dtPgto);
-        c.alterar(db);
+        c.alterar(ser_cod,db);
         
    
         
@@ -25,11 +25,11 @@ module.exports={
         const dtInicio = request.query["dt_inicio"];
         const dtFim = request.query["dt_fim"];
         const status = request.query["status"];
+        const cliente = request.query["cliente"];
 
         const con = await db.conecta();
 
-        const contas = await new ContaReceber().listarContasFiltro(dtInicio,dtFim,status,db);
-
+        const contas = await new ContaReceber().listarContasFiltro(dtInicio,dtFim,status,cliente,db);
         return response.json(contas);
     },
     
