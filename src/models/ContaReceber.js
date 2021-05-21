@@ -13,6 +13,11 @@ module.exports=class ContaReceber{
     getValor(){
         return this.con_valor
     }
+
+    setValor(valor){
+        this.con_valor = valor;
+    }
+
     getDtVenc(){
         return this.con_dtVencimento
     }
@@ -30,6 +35,12 @@ module.exports=class ContaReceber{
     async alterar(ser_cod,db){
    
         let result = await new ContaReceberDAO().alterar(this,ser_cod,db);
+        return result;
+    }
+
+    async alterarValor(ser_cod,db){
+   
+        let result = await new ContaReceberDAO().alterarValor(this,ser_cod,db);
         return result;
     }
     

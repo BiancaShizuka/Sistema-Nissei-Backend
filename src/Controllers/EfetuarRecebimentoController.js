@@ -3,6 +3,7 @@ const db = require('../models/Database');
 const ContaReceber = require('../models/ContaReceber');
 
 module.exports={
+    
     async alterar(request,response) {
  
         const {con_cod,ser_cod,con_dtPgto} = request.body;
@@ -11,13 +12,23 @@ module.exports={
 
         const c = await new ContaReceber().getConta(con_cod,ser_cod,db);
         c.setDtPgto(con_dtPgto);
-        c.alterar(ser_cod,db);
-        
-   
+        c.alterar(ser_cod,db); 
         
         return response.json(c);
     },
     
+    async alterarValor(request,response) {
+ 
+        const {con_cod,ser_cod,con_valor} = request.body;
+
+        const con = await db.conecta();
+
+        const c = await new ContaReceber().getConta(con_cod,ser_cod,db);
+        c.setValor(con_valor);
+        c.alterarValor(ser_cod,db);
+        
+        return response.json(c);
+    },
 
 
     async listarContasFiltro(request,response) {
