@@ -20,6 +20,17 @@ module.exports=class ContaReceberDAO{
   
     }
 
+    async alterarValor(conta,ser_cod,db){
+
+    
+        const sql = "UPDATE conta_receber SET con_valor=? "+
+                    "WHERE con_cod = ? AND ser_cod=?";
+        
+        const valor = [conta.getValor(),conta.getCod(),ser_cod];
+        const result = await db.manipula(sql,valor);
+  
+    }
+
     async deletarPorServico(conta,ser_cod,db){
       
     

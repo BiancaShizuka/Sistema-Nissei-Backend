@@ -3,6 +3,7 @@ const db = require('../models/Database');
 const ContaReceber = require('../models/ContaReceber');
 const Servico = require('../models/Servico')
 module.exports={
+
     async fechar(request,response) {
  
         const {ser_cod,qtde_parcelas} = request.body;
