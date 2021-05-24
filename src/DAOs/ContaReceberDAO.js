@@ -98,7 +98,7 @@ module.exports=class ContaReceberDAO{
         sql+=" order by s.ser_cod ASC, c.con_cod ASC";
       
         const contas = await db.consulta(sql,valor);
-        console.log(contas);
+       
         return contas;
     }
 }

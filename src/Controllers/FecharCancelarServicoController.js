@@ -21,12 +21,14 @@ module.exports={
             }
             else{
                 
-                for(let i=1;i<=qtde_parcelas;i++){
+                for(let i=1;i<=qtde_parcelas-1;i++){
                     let date2 = new Date(date);
-                    let v=parseFloat((parseFloat(servico.getTotal()/qtde_parcelas).toFixed(1))).toFixed(2);
+                    let v=parseFloat(servico.getTotal()/qtde_parcelas).toFixed(2);
                     servico.addContaReceber(new ContaReceber(i,v,date2));
                     date.setDate(date.getDate()+30);
                 }
+                let auxv=servico.getTotal()-parseFloat(servico.getTotal()/qtde_parcelas).toFixed(2)*(qtde_parcelas-1);
+                servico.addContaReceber(new ContaReceber(qtde_parcelas,auxv,date));
             }
             
             for(let i=0;i<qtde_parcelas;i++)
