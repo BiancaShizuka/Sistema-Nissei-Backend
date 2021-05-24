@@ -79,24 +79,24 @@ module.exports={
         await servico.excluir(db);
         return response.json(servico);
     },
-    async deletarServicoPeca(request,response){
-        const ser_cod = request.params.ser_cod;
-        const pec_cod = request.params.pec_cod;
-        const con = await db.conecta();
-        let servicoPeca=await new ServicoPeca().procurarServicoPeca(ser_cod,pec_cod,db);
-        servicoPeca.deletarServicoPeca(ser_cod,db);
-        return response.json(servicoPeca);
-    },
     async listarPorCliente(request,response){
         const {cod} = request.params;
         const con = await db.conecta();
-        const servicos=await new Servico().listarPorCliente(cod,db);
+        let cliente=await new Cliente().procurarCod(cod,db);
+        let servicos;
+        if(cliente!=null){
+            servicos=await new Servico().listarPorCliente(cliente,db);
+        }
         return response.json(servicos);
     },
     async listarPorCarro(request,response){
         const {cod} = request.params;
         const con = await db.conecta();
-        const servicos=await new Servico().listarPorCarro(cod,db);
+        let servicos;
+        let carro=await new Carro().procurarCod(cod,db);
+        if(carro!==null){
+            servicos=await new Servico().listarPorCarro(carro,db);
+        }
         return response.json(servicos);
     },
     async listarPorCarroNull(request,response){

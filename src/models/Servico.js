@@ -114,8 +114,8 @@ module.exports=class Servico{
         return servico;
     }
    
-    async listarPorCliente(cli_cod,db){
-        const resp=await new ServicoDAO().listarPorCliente(cli_cod,db);
+    async listarPorCliente(cli,db){
+        const resp=await new ServicoDAO().listarPorCliente(cli.getCod(),db);
         let carro=null;
         let cliente=null;
         let funcionario=null;
@@ -180,8 +180,8 @@ module.exports=class Servico{
      
         return servicos;
     }
-    async listarPorCarro(car_id,db){
-        const sers=await new ServicoDAO().listarPorCarro(car_id,db);
+    async listarPorCarro(car,db){
+        const sers=await new ServicoDAO().listarPorCarro(car.getId(),db);
         let servicos=[];
         let carro=null;
         let cliente=null;
@@ -215,7 +215,6 @@ module.exports=class Servico{
         let carro=null;
         let cliente=null;
         let funcionario=null;
-        let ser=null;
         for(let i=0;i<sers.data.length;i++){
             if(sers.data[i].car_id!=null)
                 carro=await new Carro().procurarCod(sers.data[i].car_id,db);
