@@ -23,6 +23,14 @@ module.exports=class ContaReceber{
     getDtPgto(){
         return this.con_dtPgto;
     }
+    setValor(valor){
+        this.con_valor = valor;
+    }
+	
+	async gravarPago(ser_cod,db){
+        let result = await new ContaReceberDAO().gravarPago(this,ser_cod,db);
+
+    }
     async gravar(ser_cod,db){
         let result = await new ContaReceberDAO().gravar(this,ser_cod,db);
 

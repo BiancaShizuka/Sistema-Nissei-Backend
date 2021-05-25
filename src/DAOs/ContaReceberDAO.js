@@ -9,13 +9,21 @@ module.exports=class ContaReceberDAO{
         const result = await db.manipula(sql,valor);
         
     }
+    async gravarPago(conta,ser_cod,db){
+
+        const sql = "INSERT INTO conta_receber (con_cod,ser_cod,con_valor,con_dtVencimento,con_dtPgto) VALUES (?, ?, ?, ?, ?)";
+  
+        const valor = [conta.getCod(),ser_cod,conta.getValor(),conta.getDtVenc(), conta.getDtPgto()];
+        const result = await db.manipula(sql,valor);
+
+    }
     async alterar(conta,ser_cod,db){
 
     
-        const sql = "UPDATE conta_receber SET con_dtPgto=? "+
+        const sql = "UPDATE conta_receber SET con_dtPgto=? , con_valor=? "+
                     "WHERE con_cod = ? AND ser_cod=?";
         
-        const valor = [conta.getDtPgto(),conta.getCod(),ser_cod];
+        const valor = [conta.getDtPgto(),conta.getValor(),conta.getCod(),ser_cod];
         const result = await db.manipula(sql,valor);
   
     }
