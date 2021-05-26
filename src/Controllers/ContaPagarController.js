@@ -1,33 +1,16 @@
 const axios=require('axios');
 const db=require('../models/Database');
 module.exports={
-    async gravar(request,response) {
-        const {des_cod,con_valor,con_dtVencimento,con_dtPgto} = request.body;
+    async efetuarPagamento(request,response) {
+        const {des_cod,con_cod,con_dtPgto} = request.body;
         const con = await db.conecta();
-        let contapagar=new Despesa(0,await new TipoDespesa().procurarCod(td_cod,db),con_valor,con_dtVencimento,con_dtPgto
-                                );
-        await contapagar.gravar(db);
+        let despesa=await new Despesa().procurarCod(des_cod,db);
+        let i=0;
+        while(i<despesa.getContas().lenght && despesa.getContas()[i].getCon_cod()!=con_cod)
+          i=i+1;
+        despesa.getContas()[i].setDt_pgto(con_dtPgto);
+        despesa.getContas()[i].alterar(des_cod,db)
         return response.json(contapagar);
     },
-    async alterar(request,response) {
-      const {con_cod,des_cod,con_valor,con_dtVencimento,con_dtPgto} = request.body;
-      const con = await db.conecta();
-      let contapagar=new Despesa(0,await new TipoDespesa().procurarCod(td_cod,db),con_valor,con_dtVencimento,con_dtPgto
-                              );
-      await contapagar.alterar(db);
-      return response.json(contapagar);
-    },
-    async excluir(request,response){
-        const {cod} = request.params;
-        const con = await db.conecta();
-        let contapagar=await new TipoDespesa().procurarCod(cod,db);
-        await contapagar.excluir(db);
-        return response.json(contapagar);
-    },
-    async procurarCod(request,response){
-        const {cod} = request.params;
-        const con = await db.conecta();
-        const contapagar=await new TipoDespesa().procurarCod(cod,db);
-        return response.json(contapagar);
-      },
+    
 }
