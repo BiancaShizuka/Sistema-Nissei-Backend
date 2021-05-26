@@ -29,12 +29,12 @@ module.exports=class Despesas{
     addContaPagar(conta){
         this.contasPagar.push(conta);
     }
+    getContasPagar(){
+        return this.contasPagar;
+    }
     async gravar(db) {
         const resp=await new DespesaDAO().gravar(this,db);
         this.des_cod=resp.lastId; 
-    }
-    async alterar(db){
-        await new DespesaDAO().alterar(this,db);
     }
     async deletar(db){
         await new DespesaDAO().deletar(this.db)

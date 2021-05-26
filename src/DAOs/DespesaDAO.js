@@ -1,13 +1,4 @@
 module.exports=class DespesaDAO{
-     async alterar(despesa,db){
-        const con = await db.conecta();
-        const sql = "UPDATE Despesa SET des_dtEntrada=?, dt_cod=?"+
-                    "WHERE des_cod = ?";
-        
-        const valor = [despesa.getDtEntrada(),despesa.getTpDespesa().getCod(),despesa.getCod()];
-        const result = await db.manipula(sql,valor);
-        return result;
-    }
     async gravar(despesa,db) {
         const sql = "INSERT INTO Despesa (des_dtEntrada,dt_cod) VALUES ( ?, ?)";
         
