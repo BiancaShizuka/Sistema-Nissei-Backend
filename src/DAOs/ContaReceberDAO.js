@@ -82,7 +82,7 @@ module.exports=class ContaReceberDAO{
             else
                 sql+=" where";
             hasParameter=true;
-            if(status=="Pagamento efetuado")
+            if(status=="Recebimento efetuado")
                 sql+=" c.con_dtPgto is not null";
             else
             sql+=" c.con_dtPgto is null";
