@@ -1,6 +1,7 @@
 const axios=require('axios');
 const db=require('../models/Database');
 const ContaPagar=require("../models/ContaPagar");
+const Despesa=require("../models/Despesa");
 module.exports={
     async gravar(request,response) {
         const {total,des_dtEntrada,td_cod,qtdeParc} = request.body;
@@ -29,8 +30,6 @@ module.exports={
       const {cod} = request.params;
       const con = await db.conecta();
       const despesa=await new Despesa().procurarCod(cod,db);
-      let contas=await new ContaPagar().listarContasDespesa(cod,db);
-      despesa.setContasPagar(contas);
       return response.json(despesa);
     }
 }
