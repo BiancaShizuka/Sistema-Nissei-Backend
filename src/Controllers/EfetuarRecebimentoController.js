@@ -21,7 +21,7 @@ module.exports={
         return response.json(servico.getContas()[i]);
     },
 	
-	async pagarParcial(request,response){
+	async receberParcial(request,response){
 
         const{ser_cod,con_cod,con_valor} = request.body;
   
