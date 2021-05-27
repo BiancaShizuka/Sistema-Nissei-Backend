@@ -79,7 +79,8 @@ routes.put('/contaReceber',contaReceberCtr.alterar);
 routes.put('/contaReceberParcial',contaReceberCtr.pagarParcial);
 routes.get('/contaReceberFiltros',contaReceberCtr.listarContasFiltro);
 
-const fecharServicoCtr=require('./Controllers/FecharCancelarServicoController');
+const fecharServicoCtr=require('./Controllers/FecharServicoController');
 routes.post('/fecharServico',fecharServicoCtr.fechar);
-routes.put('/cancelarFechamento',fecharServicoCtr.cancelar);
+const cancelarServicoCtr=require('./Controllers/CancelarServicoController');
+routes.put('/cancelarFechamento',cancelarServicoCtr.cancelar);
 module.exports=routes;
