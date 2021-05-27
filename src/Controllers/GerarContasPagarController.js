@@ -26,11 +26,5 @@ module.exports={
             await despesa.getContasPagar()[i].gravar(despesa.getCod(),db);
         }
         return response.json(despesa);
-    },
-    async procurarCod(request,response){
-      const {cod} = request.params;
-      const con = await db.conecta();
-      const despesa=await new Despesa().procurarCod(cod,db);
-      return response.json(despesa);
     }
 }

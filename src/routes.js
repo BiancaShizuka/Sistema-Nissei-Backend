@@ -86,9 +86,10 @@ routes.put('/cancelarFechamento',cancelarServicoCtr.cancelar);
 
 const gerarContaPagarCtr=require('./Controllers/GerarContasPagarController');
 routes.post('/gerarContasPagar',gerarContaPagarCtr.gravar);
-routes.get('/contaPagar/:cod',gerarContaPagarCtr.procurarCod);
+
 
 const efetuarPagCtr=require('./Controllers/EfetuarPagamentoController');
 routes.put('/efetuarPag',efetuarPagCtr.efetuarPagamento);
+routes.get('/contaPagar/:cod',efetuarPagCtr.procurarCod);
 
 module.exports=routes;

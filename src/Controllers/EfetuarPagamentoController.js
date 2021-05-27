@@ -13,5 +13,11 @@ module.exports={
         despesa.getContas()[i].alterar(des_cod,db)
         return response.json(contapagar);
     },
+    async procurarCod(request,response){
+      const {cod} = request.params;
+      const con = await db.conecta();
+      const despesa=await new Despesa().procurarCod(cod,db);
+      return response.json(despesa);
+    }
     
 }
