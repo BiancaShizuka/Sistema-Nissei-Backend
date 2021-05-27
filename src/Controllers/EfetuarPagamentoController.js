@@ -1,5 +1,6 @@
 const axios=require('axios');
 const db=require('../models/Database');
+const Despesa=require('../models/Despesa');
 module.exports={
     async efetuarPagamento(request,response) {
         const {des_cod,con_cod,con_dtPgto} = request.body;

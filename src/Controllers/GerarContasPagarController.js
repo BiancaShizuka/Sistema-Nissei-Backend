@@ -2,6 +2,7 @@ const axios=require('axios');
 const db=require('../models/Database');
 const ContaPagar=require("../models/ContaPagar");
 const Despesa=require("../models/Despesa");
+const TipoDespesa=require('../models/TipoDespesas');
 module.exports={
     async gravar(request,response) {
         const {total,des_dtEntrada,td_cod,qtdeParc} = request.body;
