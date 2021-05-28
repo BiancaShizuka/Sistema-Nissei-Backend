@@ -8,11 +8,13 @@ module.exports={
         const {con_cod,ser_cod,con_dtPgto} = request.body;
 
         const con = await db.conecta();
+        //procuro o serviço que dentro tem uma lista das contas a receber
         const servico=await new Servico().procurarCod(ser_cod,db);
         let i=0;
+        //procuro a conta, na lista de contas do serviço, que tem o código con_cod
         while(i<servico.getContas().length && servico.getContas()[i].getCod()!==con_cod)
             i++;
-        
+        //coloco o dia que o cliente pagou
         servico.getContas()[i].setDtPgto(con_dtPgto);
         servico.getContas()[i].alterar(ser_cod,db);
         
