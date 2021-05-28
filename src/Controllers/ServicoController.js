@@ -48,16 +48,19 @@ module.exports={
         }
         await servico.alterar(db);
 
+        //percorro a lista das peças do serviço que foram excluidas
         let pec;
         for(let i=0;i<pecasExc.length;i++){
             pec=new ServicoPeca(await new Peca().procurarCod(pecasExc[i].pec_cod,db),
                                                     pecasExc[i].uti_precoUni,
                                                     pecasExc[i].uti_qtde);
+            //deleto a peça do serviço do banco
             await pec.deletar(servico.getCod(),db);
         }
 
+        //Vejo quais peças da lista ainda não estão no banco
         for(let i=0;i<servico.getPecas().length;i++){
-            if(pecas[i].banco==0) //apenas aqueles que ainda nao estao
+            if(pecas[i].banco==0) //apenas aqueles que ainda nao estao eu gravo
             await servico.getPecas()[i].gravar(servico.getCod(),db);
         }
         return response.json(servico);
@@ -72,8 +75,10 @@ module.exports={
         const {cod} = request.params;
         const con = await db.conecta();
         let servico=await new Servico().procurarCod(cod,db);
+        //deleto todas as peças que o serviço utilizou da tabela ServiçoPeça
         for(let i=0;i<servico.getPecas().length;i++)
             await servico.getPecas()[i].deletar(cod,db);
+        //Deleto todas as contas que o serviço tem
         for(let i=0;i<servico.getContas().length;i++)
             await servico.getContas()[i].deletarContaServico(cod,db);
         await servico.excluir(db);

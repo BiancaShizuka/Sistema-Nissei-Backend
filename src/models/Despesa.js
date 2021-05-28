@@ -42,7 +42,7 @@ module.exports=class Despesa{
     }
     async procurarCod(cod,db){
         const resp=await new DespesaDAO().procurarCod(cod,db);
-        let despesa = new Despesas(resp.data[0].des_cod,resp.data[0].des_dtEntrada,0,resp.data[0].dt_cod);
+        let despesa = new Despesa(resp.data[0].des_cod,resp.data[0].des_dtEntrada,0,resp.data[0].dt_cod);
         let contas=await new ContaPagar().listarContasDespesa(cod,db);
         despesa.setContasPagar(contas);
         despesa.calcularTotal();

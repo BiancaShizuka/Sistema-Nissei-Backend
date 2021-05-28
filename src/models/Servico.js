@@ -4,7 +4,6 @@ const Cliente=require('./Cliente');
 const ServicoPeca=require('./ServicoPeca');
 const ServicoDAO=require('../DAOs/ServicoDAO');
 const ContaReceber = require('./ContaReceber');
-const ContaReceberDAO = require('../DAOs/ContaReceberDAO');
 module.exports=class Servico{
     constructor(cod,carro,cliente,funcionario,descricao,maoObra,inicio,status,fim){
         this.ser_cod=cod;
@@ -18,6 +17,7 @@ module.exports=class Servico{
         this.ser_fim=fim;
         this.pecas=[];
         this.contasReceber=[];
+        this.total=0;
     }
     getFuncionario(){
         return this.funcionario;
@@ -101,15 +101,20 @@ module.exports=class Servico{
         const resp=await new ServicoDAO().procurarCod(cod,db);
         let carro=null;
         let funcionario=null;
+        //Verifica se o campo do car_id do serviço está nulo, se não estiver eu procuro o carro
         if(resp.data[0].car_id!=null)
             carro=await new Carro().procurarCod(resp.data[0].car_id,db);
+        //Verifica se o campo do fun_cod do serviço está nulo, se não estiver eu procuro o funcionario
         if(resp.data[0].fun_cod!=null)
             funcionario=await new Funcionario().procurarCod(resp.data[0].fun_cod,db);
         let servico=new Servico(resp.data[0].ser_cod,carro,await (new Cliente().procurarCod(resp.data[0].cli_cod,db)),
                         funcionario,resp.data[0].ser_descricao,resp.data[0].ser_maoObra,
                         resp.data[0].ser_inicio,resp.data[0].ser_status,resp.data[0].ser_fim);
+        //Procuro as peças que o serviço usou
         servico.setPecas(await (new ServicoPeca().listar(cod,db)));
+        //Listo as contas do serviço
         servico.setContas(await (new ContaReceber().listarContasServico(cod,db)));
+        //Calculo o valor total do serviço
         servico.calcularTotal();
         return servico;
     }
