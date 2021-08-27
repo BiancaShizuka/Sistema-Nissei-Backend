@@ -1,6 +1,7 @@
 const axios=require('axios');
 const db=require('../models/Database');
 const TipoDespesa=require('../models/TipoDespesas');
+const { listar } = require('./ClienteController');
 module.exports={
     async gravar(request,response) {
         const {td_nome} = request.body;
@@ -29,4 +30,9 @@ module.exports={
       await tipodespesa.excluir(db);
       return response.json(tipodespesa);
     },
+    async listar(request,response){
+      const con=await db.conecta();
+      const tipos=await new TipoDespesa().listar();
+      return response.json(tipos);
+    }
 }

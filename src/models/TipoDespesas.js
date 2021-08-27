@@ -34,4 +34,12 @@ module.exports=class TipoDespesas{
         let tipodespesa = new TipoDespesas(resp.data[0].td_cod,resp.data[0].td_nome)
         return tipodespesa;
     }
+    async listar(db){
+        const resp=await new TipoDespesaDAO().listar();
+        let tdespesas=[];
+        for(let i=0;i<resp.data.length;i++){
+            tdespesas.push(new TipoDespesas(resp.data[i].td_cod,resp.data[i].td_nome));
+        }
+        return tdespesas;
+    }
 }

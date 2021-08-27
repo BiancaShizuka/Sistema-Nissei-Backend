@@ -1,4 +1,9 @@
 module.exports=class TipoDespesasDAO{
+    async listar(db){
+        const sql="SELECT * FROM tipo_despesa";
+        const result=await db.consulta(sql);
+        return result;
+    }
     async alterar(tpDesp,db){
         const sql = "UPDATE TipoDespesa SET dt_nome=?"+
                     "WHERE dt_cod = ?";
