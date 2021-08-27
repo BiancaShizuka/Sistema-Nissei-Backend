@@ -10,6 +10,7 @@ const funcController=require('./Controllers/FuncController');
 const contatoCtrl=require('./Controllers/ContatoController');
 const servicoCtrl=require('./Controllers/ServicoController');
 const tipoDespesaCtrl=require('./Controllers/TipoDespesasController');
+const despesaCtrl=require('./Controllers/GerarContasPagarController');
 
 routes.post('/peca',pecaController.gravar);
 routes.put('/peca',pecaController.alterar);
@@ -93,4 +94,7 @@ routes.put('/efetuarPag',efetuarPagCtr.efetuarPagamento);
 routes.get('/contaPagar/:cod',efetuarPagCtr.procurarCod);
 
 routes.get('/tipodespesa',tipoDespesaCtrl.listar);
+
+routes.post('/despesa',despesaCtrl.gravar);
+
 module.exports=routes;

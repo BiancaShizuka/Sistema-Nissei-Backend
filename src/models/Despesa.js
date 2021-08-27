@@ -33,6 +33,7 @@ module.exports=class Despesa{
         return this.contasPagar;
     }
     async gravar(db) {
+       
         const resp=await new DespesaDAO().gravar(this,db);
         this.des_cod=resp.lastId; 
     }

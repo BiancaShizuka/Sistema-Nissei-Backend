@@ -6,9 +6,10 @@ module.exports=class ContaPagarDAO{
         return contapagar;
     }
     async gravar(conta,des_cod,db) {    
-        const sql = "INSERT INTO Conta_Pagar (con_cod,des_cod,con_valor,con_dtVencimento,con_dtPagamento) VALUES (?, ?, ?, ?,?)";
-        const valor = [conta.getCon_cod(),des_cod,conta.getCon_valor(),conta.getDt_vencimento(),conta.getDt_pgto()];
+        const sql = "INSERT INTO Conta_Pagar (con_cod,des_cod,con_valor,con_dtVencimento,con_dtPgto) VALUES (?, ?, ?, ?,null)";
+        const valor = [conta.getCon_cod(),des_cod,conta.getCon_valor(),conta.getDt_vencimento()];
         const result=await db.manipula(sql,valor);
+        console.log(result);
         return result;
     }
     async deletar(conta,des_cod,db){

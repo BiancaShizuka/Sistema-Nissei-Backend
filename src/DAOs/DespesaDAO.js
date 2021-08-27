@@ -1,9 +1,11 @@
 module.exports=class DespesaDAO{
     async gravar(despesa,db) {
-        const sql = "INSERT INTO Despesa (des_dtEntrada,dt_cod) VALUES ( ?, ?)";
+        const sql = "INSERT INTO Despesa (des_dtEntrada,td_cod) VALUES ( ?, ?)";
         
-        const valor = [despesa.getDtEntrada(),despesa.getCod()];
+        const valor = [despesa.getDtEntrada(),despesa.getTpDespesa().getCod()];
         const result = await db.manipula(sql,valor);
+        
+       
         return result;
     }
     async deletar(despesa,db){

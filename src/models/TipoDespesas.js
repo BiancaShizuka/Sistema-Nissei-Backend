@@ -31,7 +31,9 @@ module.exports=class TipoDespesas{
     }
     async procurarCod(cod,db){
         const resp=await new TipoDespesaDAO().procurarCod(cod,db);
+       
         let tipodespesa = new TipoDespesas(resp.data[0].td_cod,resp.data[0].td_nome)
+        
         return tipodespesa;
     }
     async listar(db){
