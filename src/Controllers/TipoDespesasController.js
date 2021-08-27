@@ -32,7 +32,8 @@ module.exports={
     },
     async listar(request,response){
       const con=await db.conecta();
-      const tipos=await new TipoDespesa().listar();
+      const tipos=await new TipoDespesa().listar(db);
+      
       return response.json(tipos);
     }
 }
