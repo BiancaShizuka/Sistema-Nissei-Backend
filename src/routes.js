@@ -12,6 +12,7 @@ const servicoCtrl=require('./Controllers/ServicoController');
 const tipoDespesaCtrl=require('./Controllers/TipoDespesasController');
 const despesaCtrl=require('./Controllers/GerarContasPagarController');
 
+
 routes.post('/peca',pecaController.gravar);
 routes.put('/peca',pecaController.alterar);
 routes.get('/peca/:cod',pecaController.procurarCod);
@@ -90,8 +91,9 @@ routes.post('/gerarContasPagar',gerarContaPagarCtr.gravar);
 
 
 const efetuarPagCtr=require('./Controllers/EfetuarPagamentoController');
-routes.put('/efetuarPag',efetuarPagCtr.efetuarPagamento);
+routes.put('/contaPagar',efetuarPagCtr.alterar);
 routes.get('/contaPagar/:cod',efetuarPagCtr.procurarCod);
+routes.get('/contasfiltro',efetuarPagCtr.listarContasFiltro);
 
 routes.get('/tipodespesa',tipoDespesaCtrl.listar);
 

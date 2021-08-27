@@ -1,8 +1,9 @@
 const axios=require('axios');
 const db=require('../models/Database');
 const Despesa=require('../models/Despesa');
+const ContaPagar=require('../models/ContaPagar');
 module.exports={
-    async efetuarPagamento(request,response) {
+    async alterar(request,response) {
         const {des_cod,con_cod,con_dtPgto} = request.body;
         const con = await db.conecta();
         let despesa=await new Despesa().procurarCod(des_cod,db);
@@ -18,6 +19,17 @@ module.exports={
       const con = await db.conecta();
       const despesa=await new Despesa().procurarCod(cod,db);
       return response.json(despesa);
-    }
+    },
+    async listarContasFiltro(request,response){
+      const td_cod = request.query["td_cod"];
+      const dtFim = request.query["dtFim"];
+      const dtInicio = request.query["dtInicio"];
+
+      const con = await db.conecta();
+
+      const contas = await new ContaPagar().listarContasFiltro(td_cod,dtInicio,dtFim,db);
+     
+      return response.json(contas);
+   }
     
 }

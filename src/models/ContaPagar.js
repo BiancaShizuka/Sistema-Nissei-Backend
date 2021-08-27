@@ -47,4 +47,18 @@ module.exports=class ContaPagar{
         }
         return contas;
     }
+    async listarContasFiltro(td_cod,dtInicio,dtFim,db){
+        let resp=await new ContaPagarDAO().listarFiltro(td_cod,dtInicio,dtFim,db);
+        let contas=[];
+       
+        for(let i=0;i<resp.data.length;i++){
+            
+            
+            let c=new ContaPagar(resp.data[i].con_cod,resp.data[i].con_valor,resp.data[i].con_dtVencimento,resp.data[i].con_dtPgto);
+            c["td_nome"]=resp.data[i].td_nome;
+            contas.push(c);
+        }
+        
+        return contas;
+    }
 }
