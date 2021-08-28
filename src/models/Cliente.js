@@ -30,4 +30,7 @@ module.exports=class Cliente extends Pessoa{
    
         return cliente;
     }
+    atualizar(){
+        console.log("entrei no cliente na função atualizar")
+    }
 }
