@@ -102,10 +102,27 @@ module.exports=class Servico extends Sujeito{
     }
     async adicionar(obs,db){
         this.observadores.push(obs);
-        await new ObservadorDAO().gravar(obs,db);
+        const resp=await new ObservadorDAO().gravar(obs,db);
+        return resp;
     }
     async remover(obs,db){
-        
+        const index = this.observadores.indexOf(obs);
+        this.observadores.splice(index, 1);
+        const resp=await new ObservadorDAO().deletar(obs,db);
+        return resp;
+    }
+    async notificar(){
+        const resp=await new ObservadorDAO().listar(this,db);
+        const observer=new ObservadorDAO();
+        let cliente=null;
+        for(let i=0;i<resp.data.length;i++){
+            this.observadores.push(await new Cliente().procurarCod(resp.data[i].cli_cod,db));
+        }
+        while(this.observadores.length>0){
+            cliente=this.observadores.pop();
+            observer.deletar(this,db);
+            cliente.notificar();
+        }
     }
     async procurarCod(cod,db){
         const resp=await new ServicoDAO().procurarCod(cod,db);

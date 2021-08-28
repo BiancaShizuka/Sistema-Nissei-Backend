@@ -11,9 +11,9 @@ module.exports=class ObservadorDAO{
         const resp=await db.manipula(sql,valor);
         return resp;
     }
-    async listar(cod,db){
+    async listar(obs,db){
         const sql="select * from observadores where ser_cod=?";
-        const valor=[cod];
+        const valor=[obs.getCod()];
         const resp=await db.consulta(sql,valor);
         return resp;
     }
