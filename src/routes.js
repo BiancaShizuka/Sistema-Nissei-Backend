@@ -77,7 +77,8 @@ routes.get('/servicoFiltro',servicoCtrl.listarFiltros);
 routes.put('/servico',servicoCtrl.alterar);
 routes.delete('/servico/:cod',servicoCtrl.excluir);
 
-const contaReceberCtr=require('./Controllers/EfetuarRecebimentoController');
+const EfetuarRecebimentoController=require('./Controllers/EfetuarRecebimentoController');
+contaReceberCtr=new EfetuarRecebimentoController();
 routes.put('/contaReceber',contaReceberCtr.alterar);
 routes.get('/contaReceberFiltros',contaReceberCtr.listarContasFiltro);
 
@@ -90,7 +91,8 @@ const gerarContaPagarCtr=require('./Controllers/GerarContasPagarController');
 routes.post('/gerarContasPagar',gerarContaPagarCtr.gravar);
 
 
-const efetuarPagCtr=require('./Controllers/EfetuarPagamentoController');
+const EfetuarPagamentoController=require('./Controllers/EfetuarPagamentoController');
+efetuarPagCtr=new EfetuarPagamentoController();
 routes.put('/contaPagar',efetuarPagCtr.alterar);
 routes.get('/contaPagar/:cod',efetuarPagCtr.procurarCod);
 routes.get('/contasfiltro',efetuarPagCtr.listarContasFiltro);

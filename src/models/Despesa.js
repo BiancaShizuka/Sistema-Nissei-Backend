@@ -23,13 +23,13 @@ module.exports=class Despesa{
     getDtEntrada(){
         return this.dtEntrada;
     }
-    setContasPagar(contas){
+    setContas(contas){
         this.contasPagar=contas;
     }
     addContaPagar(conta){
         this.contasPagar.push(conta);
     }
-    getContasPagar(){
+    getContas(){
         return this.contasPagar;
     }
     async gravar(db) {
@@ -45,14 +45,14 @@ module.exports=class Despesa{
         const resp=await new DespesaDAO().procurarCod(cod,db);
         let despesa = new Despesa(resp.data[0].des_cod,resp.data[0].des_dtEntrada,0,resp.data[0].dt_cod);
         let contas=await new ContaPagar().listarContasDespesa(cod,db);
-        despesa.setContasPagar(contas);
+        despesa.setContas(contas);
         despesa.calcularTotal();
         return despesa;
     }
     calcularTotal(){
         this.total=0;
         for(let i=0;i<this.contasPagar.length;i++){
-            this.total+=this.getContasPagar()[i].getCon_valor;
+            this.total+=this.getContas()[i].getCon_valor;
         }
     }
 }
