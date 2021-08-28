@@ -11,7 +11,8 @@ module.exports=class EfetuarRecebimentoController extends BaixaConta{
     async alterar(request,response) {
  
         const {con_cod,ser_cod,con_dtPgto} = request.body;
-        const resp=await super.gravar(ser_cod,con_cod,con_dtPgto,true);
+        const t=new EfetuarRecebimentoController();
+        const resp=await super.gravar(ser_cod,con_cod,con_dtPgto,true,t);
         return response.json(resp);
     }
     

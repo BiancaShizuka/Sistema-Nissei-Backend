@@ -2,17 +2,23 @@ const db = require('../models/Database');
 const Servico = require('../models/Servico');
 const Despesa =require('../models/Despesa');
 module.exports=class BaixaConta{
-    async procurarCod(cod,db) {
+    constructor() {
+        if (this.constructor == BaixaConta) {
+          throw new Error("Abstract classes can't be instantiated.");
+        }
     }
-    async gravar(conta_cod,con_cod,con_dtPgto, isServico){
+    procurarCod(cod,db) {
+    }
+    async gravar(conta_cod,con_cod,con_dtPgto, isServico,objet){
         const con = await db.conecta();
         let conta=null;
         //conta=await procurarCod(conta_cod,db);
-        
+        conta=await objet.procurarCod(conta_cod,db);
+        /*
         if (isServico)
             conta=await new Servico().procurarCod(conta_cod,db);
         else
-            conta=await new Despesa().procurarCod(conta_cod,db);
+            conta=await new Despesa().procurarCod(conta_cod,db);*/
         let i=0;
         while(i<conta.getContas().length && conta.getContas()[i].getCod()!==con_cod)
             i++;

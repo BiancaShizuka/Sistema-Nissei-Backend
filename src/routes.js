@@ -94,7 +94,6 @@ routes.post('/gerarContasPagar',gerarContaPagarCtr.gravar);
 const EfetuarPagamentoController=require('./Controllers/EfetuarPagamentoController');
 efetuarPagCtr=new EfetuarPagamentoController();
 routes.put('/contaPagar',efetuarPagCtr.alterar);
-routes.get('/contaPagar/:cod',efetuarPagCtr.procurarCod);
 routes.get('/contasfiltro',efetuarPagCtr.listarContasFiltro);
 
 routes.get('/tipodespesa',tipoDespesaCtrl.listar);
