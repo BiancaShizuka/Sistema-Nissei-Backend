@@ -1,8 +1,12 @@
+
 const axios = require('axios');
 const db = require('../models/Database');
 const ContaReceber = require('../models/ContaReceber');
 const Servico = require('../models/Servico')
+const Strategy=require('./Strategy')
+
 module.exports={
+    
     async fechar(request,response) {
  
         const {ser_cod,qtde_parcelas} = request.body;
@@ -15,7 +19,13 @@ module.exports={
             //coloca a data que o serviço terminou
             servico.setFim(date);
             await servico.alterar(db);
-        
+
+
+            str=new Strategy()
+            str.gerarParcelas(servico,qtde_parcelas,date,db);
+
+
+            /*
             if(qtde_parcelas===1){// a vista
                 //se for a vista só adiciono uma conta que tem o valor total do serviço e o dia do vencimento
                 servico.addContaReceber(new ContaReceber(1,servico.getTotal(),date));
@@ -34,7 +44,7 @@ module.exports={
             }
             //mando gravar as contas uma por uma
             for(let i=0;i<qtde_parcelas;i++)
-                await servico.getContas()[i].gravar(ser_cod,db);
+                await servico.getContas()[i].gravar(ser_cod,db);*/
         }
         return response.json(servico);
     },
