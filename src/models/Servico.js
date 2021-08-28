@@ -4,7 +4,9 @@ const Cliente=require('./Cliente');
 const ServicoPeca=require('./ServicoPeca');
 const ServicoDAO=require('../DAOs/ServicoDAO');
 const ContaReceber = require('./ContaReceber');
-module.exports=class Servico{
+const Sujeito=require('./Sujeito');
+const ObservadorDAO = require('../DAOs/ObservadorDAO');
+module.exports=class Servico extends Sujeito{
     constructor(cod,carro,cliente,funcionario,descricao,maoObra,inicio,status,fim){
         this.ser_cod=cod;
         this.carro=carro;
@@ -18,6 +20,7 @@ module.exports=class Servico{
         this.pecas=[];
         this.contasReceber=[];
         this.total=0;
+        this.observadores=[];
     }
     getFuncionario(){
         return this.funcionario;
@@ -96,6 +99,13 @@ module.exports=class Servico{
     async alterar(db){
     
         await new ServicoDAO().alterar(this,db);
+    }
+    async adicionar(obs,db){
+        this.observadores.push(obs);
+        await new ObservadorDAO().gravar(obs,db);
+    }
+    async remover(obs,db){
+        
     }
     async procurarCod(cod,db){
         const resp=await new ServicoDAO().procurarCod(cod,db);
