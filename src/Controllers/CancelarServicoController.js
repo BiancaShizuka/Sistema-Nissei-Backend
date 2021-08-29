@@ -1,7 +1,8 @@
 
 const db = require('../models/Database');
 const ContaReceber = require('../models/ContaReceber');
-const Servico = require('../models/Servico')
+const Servico = require('../models/Servico');
+const ObservadorDAO=require('../DAOs/ObservadorDAO');
 module.exports={
     async cancelar(request,response) {
  
@@ -29,7 +30,7 @@ module.exports={
             }
             servico.setFim(null);//coloco que o serviço não terminou, assim a data é null
             await servico.alterar(db);
-        
+            await servico.adicionar(servico.getCliente(),db);
         }
         
       

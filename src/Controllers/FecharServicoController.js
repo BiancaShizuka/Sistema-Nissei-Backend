@@ -23,7 +23,7 @@ module.exports={
 
             str=new Strategy()
             str.gerarParcelas(servico,qtde_parcelas,date,db);
-
+            servico.notificar(db);
 
             /*
             if(qtde_parcelas===1){// a vista

@@ -1,5 +1,7 @@
-module.exports=class Pessoa{
+const Sujeito=require('./Sujeito');
+module.exports=class Pessoa extends Sujeito{
     constructor(cod,nome,cpf,sexo,email){
+        super();
         this.pes_cod=cod;
         this.pes_nome=nome;
         this.pes_sexo=sexo;
