@@ -27,4 +27,7 @@ module.exports=class Funcionario extends Pessoa{
        
         return funcionario;
     }
+    atualizar(){
+        console.log("entrei no Funcionario na função atualizar")
+    }
 }

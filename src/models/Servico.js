@@ -123,18 +123,23 @@ module.exports=class Servico extends Sujeito{
         const observer=new ServicoDAO();
         let resp=await observer.listarObsCli(this,db);
         
-        let cliente=null;
+        let cliente=null,func=null;
         for(let i=0;i<resp.data.length;i++){
             this.observadores.push(await new Cliente().procurarCod(resp.data[i].cli_cod,db));
+        }
+        while(this.observadores.length>0){
+            cliente=this.observadores.pop();
+            observer.deletarObsCli(this,cliente,db);
+            cliente.atualizar();
         }
         resp=await observer.listarObsFun(this,db);
         for(let i=0;i<resp.data.length;i++){
             this.observadores.push(await new Funcionario().procurarCod(resp.data[i].fun_cod,db));
         }
         while(this.observadores.length>0){
-            cliente=this.observadores.pop();
-            observer.deletar(this,cliente,db);
-            cliente.atualizar();
+            func=this.observadores.pop();
+            observer.deletarObsFun(this,func,db);
+            func.atualizar();
         }
     }
     async procurarCod(cod,db){

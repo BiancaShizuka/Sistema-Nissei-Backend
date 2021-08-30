@@ -105,7 +105,6 @@ module.exports=class ServicoDAO{
             sql+=" where";
         sql+=" ser_status=true"
         sql+=" order by ser_inicio";
-        console.log(sql);
         const result = await db.consulta(sql,valor);
         
         return result;
@@ -153,7 +152,7 @@ module.exports=class ServicoDAO{
 
     async gravarObsFun(ser,obs,db){
         const sql="insert into observadoresFun (ser_cod,fun_cod) values (?,?)";
-        console.log("ObservadorDAO cli_cod="+obs.getCod());
+        console.log("ObservadorDAO fun_cod="+obs.getCod());
         const valor=[ser.getCod(),obs.getCod()];
         const resp= await db.manipula(sql,valor);
         console.log("RESPOSTA:  "+resp.err);
