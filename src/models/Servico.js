@@ -5,7 +5,6 @@ const ServicoPeca=require('./ServicoPeca');
 const ServicoDAO=require('../DAOs/ServicoDAO');
 const ContaReceber = require('./ContaReceber');
 const Sujeito=require('./Sujeito');
-const ObservadorDAO = require('../DAOs/ObservadorDAO');
 module.exports=class Servico extends Sujeito{
     constructor(cod,carro,cliente,funcionario,descricao,maoObra,inicio,status,fim){
         super();
@@ -103,22 +102,34 @@ module.exports=class Servico extends Sujeito{
     }
     async adicionar(obs,db){
         this.observadores.push(obs);
-        const resp=await new ObservadorDAO().gravar(this,obs,db);
+        let resp;
+        if(typeof(obs)==Cliente)
+            resp=await new ServicoDAO().gravarObsCli(this,obs,db);
+        else
+            resp=await new ServicoDAO().gravarObsFun(this,obs,db);
         return resp;
     }
     async remover(obs,db){
         const index = this.observadores.indexOf(obs);
         this.observadores.splice(index, 1);
-        const resp=await new ObservadorDAO().deletar(ser,obs,db);
+        let resp;
+        if(typeof(obs)==Cliente)
+            resp=await new ServicoDAO().deletarObsCli(ser,obs,db);
+        else
+            resp=await new ServicoDAO().deletarObsFun(ser,obs,db);
         return resp;
     }
     async notificar(db){
-        const observer=new ObservadorDAO();
-        const resp=await observer.listar(this,db);
+        const observer=new ServicoDAO();
+        let resp=await observer.listarObsCli(this,db);
         
         let cliente=null;
         for(let i=0;i<resp.data.length;i++){
             this.observadores.push(await new Cliente().procurarCod(resp.data[i].cli_cod,db));
+        }
+        resp=await observer.listarObsFun(this,db);
+        for(let i=0;i<resp.data.length;i++){
+            this.observadores.push(await new Funcionario().procurarCod(resp.data[i].fun_cod,db));
         }
         while(this.observadores.length>0){
             cliente=this.observadores.pop();

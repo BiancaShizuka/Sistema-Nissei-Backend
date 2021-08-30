@@ -29,6 +29,7 @@ module.exports={
             await servico.getPecas()[i].gravar(servico.getCod(),db);
         }
         await servico.adicionar(servico.getCliente(),db);
+        await servico.adicionar(servico.getFuncionario(),db);
         return response.json(servico);
     },
     async alterar(request,response){

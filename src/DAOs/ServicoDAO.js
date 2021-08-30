@@ -128,4 +128,47 @@ module.exports=class ServicoDAO{
         const sers = await db.consulta(sql,valor);
         return sers;
     }
+
+    //OBSERVER SQL
+    async gravarObsCli(ser,obs,db){
+        const sql="insert into observadoresCli (ser_cod,cli_cod) values (?,?)";
+        console.log("ObservadorDAO cli_cod="+obs.getCod());
+        const valor=[ser.getCod(),obs.getCod()];
+        const resp= await db.manipula(sql,valor);
+        console.log("RESPOSTA:  "+resp.err);
+        return resp;
+    }
+    async deletarObsCli(ser,obs,db){
+        const sql = "DELETE FROM observadoresCli WHERE ser_cod=? AND cli_cod=? "
+        const valor=[ser.getCod(),obs.getCod()];
+        const resp=await db.manipula(sql,valor);
+        return resp;
+    }
+    async listarObsCli(ser,db){
+        const sql="select * from observadoresCli where ser_cod=?";
+        const valor=[ser.getCod()];
+        const resp=await db.consulta(sql,valor);
+        return resp;
+    }
+
+    async gravarObsFun(ser,obs,db){
+        const sql="insert into observadoresFun (ser_cod,fun_cod) values (?,?)";
+        console.log("ObservadorDAO cli_cod="+obs.getCod());
+        const valor=[ser.getCod(),obs.getCod()];
+        const resp= await db.manipula(sql,valor);
+        console.log("RESPOSTA:  "+resp.err);
+        return resp;
+    }
+    async deletarObsFun(ser,obs,db){
+        const sql = "DELETE FROM observadoresFun WHERE ser_cod=? AND fun_cod=? "
+        const valor=[ser.getCod(),obs.getCod()];
+        const resp=await db.manipula(sql,valor);
+        return resp;
+    }
+    async listarObsFun(ser,db){
+        const sql="select * from observadoresFun where ser_cod=?";
+        const valor=[ser.getCod()];
+        const resp=await db.consulta(sql,valor);
+        return resp;
+    }
 }
