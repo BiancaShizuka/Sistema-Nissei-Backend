@@ -9,16 +9,10 @@ module.exports=class BaixaConta{
     }
     procurarCod(cod,db) {
     }
-    async gravar(conta_cod,con_cod,con_dtPgto, isServico,objet){
+    async gravar(conta_cod,con_cod,con_dtPgto, objet){
         const con = await db.conecta();
         let conta=null;
-        //conta=await procurarCod(conta_cod,db);
         conta=await objet.procurarCod(conta_cod,db);
-        /*
-        if (isServico)
-            conta=await new Servico().procurarCod(conta_cod,db);
-        else
-            conta=await new Despesa().procurarCod(conta_cod,db);*/
         let i=0;
         while(i<conta.getContas().length && conta.getContas()[i].getCod()!==con_cod)
             i++;

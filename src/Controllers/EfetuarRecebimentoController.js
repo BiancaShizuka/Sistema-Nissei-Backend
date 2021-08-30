@@ -12,7 +12,7 @@ module.exports=class EfetuarRecebimentoController extends BaixaConta{
  
         const {con_cod,ser_cod,con_dtPgto} = request.body;
         const t=new EfetuarRecebimentoController();
-        const resp=await super.gravar(ser_cod,con_cod,con_dtPgto,true,t);
+        const resp=await super.gravar(ser_cod,con_cod,con_dtPgto,t);
         return response.json(resp);
     }
     

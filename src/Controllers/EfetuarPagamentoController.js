@@ -7,7 +7,7 @@ module.exports= class EfetuarPagamentoController extends BaixaConta{
   async alterar(request,response) {
       const {des_cod,con_cod,con_dtPgto} = request.body;
       const t=new EfetuarPagamentoController();
-      const resp=await super.gravar(des_cod,con_cod,con_dtPgto,false,t);
+      const resp=await super.gravar(des_cod,con_cod,con_dtPgto,t);
       return response.json(resp);
   }
   async procurarCod(cod,db){
