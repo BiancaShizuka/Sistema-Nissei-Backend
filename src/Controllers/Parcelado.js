@@ -1,6 +1,11 @@
 const ContaReceber=require('../models/ContaReceber');
-var Parcelado = function () {
-    this.gerarParcelas = async function (servico,qtde_parcelas,date,db) {
+const Strategy=require('./Strategy')
+function Parcelado(){
+    Strategy.call(this);
+}
+//Parcelado.prototype=Object.create(Strategy.prototype);
+Parcelado.prototype={
+    gerarParcelas: async function (servico,qtde_parcelas,date,db) {
         for(let i=1;i<=qtde_parcelas-1;i++){
             let date2 = new Date(date);
             let v=parseFloat(servico.getTotal()/qtde_parcelas).toFixed(2);

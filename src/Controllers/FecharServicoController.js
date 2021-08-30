@@ -3,7 +3,7 @@ const axios = require('axios');
 const db = require('../models/Database');
 const ContaReceber = require('../models/ContaReceber');
 const Servico = require('../models/Servico')
-const Strategy=require('./Strategy')
+const Vista=require('./Vista')
 
 module.exports={
     
@@ -21,7 +21,7 @@ module.exports={
             await servico.alterar(db);
 
 
-            str=new Strategy()
+            str=new Vista()
             str.gerarParcelas(servico,qtde_parcelas,date,db);
             servico.notificar(db);
 

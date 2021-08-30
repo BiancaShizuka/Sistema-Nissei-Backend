@@ -4,13 +4,12 @@ var GeraConta = function () {
 };
 
 GeraConta.prototype = {
-    setStrategy: function (modo) {
-        this.modo = modo;
-    },
+    
 
     gerarParcelas: function (servico,qtde_parcelas,date,db) {
-        //return this.modo.gerar...
-        return new Vista().gerarParcelas(servico,qtde_parcelas,date,db);
+        throw typeof(Error) !== 'undefined'? 
+        new Error(" Interface Strategy: method gerarParcelas() unimplemented!") 
+        : " Interface Strategy: method gerarParcelas() unimplemented!";
     }
 };
 
