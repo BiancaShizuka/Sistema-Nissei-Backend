@@ -28,8 +28,8 @@ module.exports={
             }
             servico.setFim(null);//coloco que o serviço não terminou, assim a data é null
             await servico.alterar(db);
-            await servico.adicionar(servico.getCliente(),db);
-            await servico.adicionar(servico.getFuncionario(),db);
+            await servico.adicionar(servico.getCliente(),true,db);
+            await servico.adicionar(servico.getFuncionario(),false,db);
         }
         
       

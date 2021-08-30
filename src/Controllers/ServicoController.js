@@ -28,8 +28,8 @@ module.exports={
         for(let i=0;i<servico.getPecas().length;i++){
             await servico.getPecas()[i].gravar(servico.getCod(),db);
         }
-        await servico.adicionar(servico.getCliente(),db);
-        await servico.adicionar(servico.getFuncionario(),db);
+        await servico.adicionar(servico.getCliente(),true,db);
+        await servico.adicionar(servico.getFuncionario(),true,db);
         return response.json(servico);
     },
     async alterar(request,response){

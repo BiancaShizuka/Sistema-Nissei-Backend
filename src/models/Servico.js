@@ -100,20 +100,20 @@ module.exports=class Servico extends Sujeito{
     
         await new ServicoDAO().alterar(this,db);
     }
-    async adicionar(obs,db){
+    async adicionar(obs,isCliente,db){
         this.observadores.push(obs);
         let resp;
-        if(typeof(obs)==Cliente)
+        if(isCliente)
             resp=await new ServicoDAO().gravarObsCli(this,obs,db);
         else
             resp=await new ServicoDAO().gravarObsFun(this,obs,db);
         return resp;
     }
-    async remover(obs,db){
+    async remover(obs,isCliente,db){
         const index = this.observadores.indexOf(obs);
         this.observadores.splice(index, 1);
         let resp;
-        if(typeof(obs)==Cliente)
+        if(isCliente)
             resp=await new ServicoDAO().deletarObsCli(ser,obs,db);
         else
             resp=await new ServicoDAO().deletarObsFun(ser,obs,db);
